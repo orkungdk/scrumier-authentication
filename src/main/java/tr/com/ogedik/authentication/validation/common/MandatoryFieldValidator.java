@@ -1,7 +1,7 @@
 /**
  * © 2020 Copyright Amadeus Unauthorised use and disclosure strictly forbidden.
  */
-package tr.com.ogedik.authentication.validation;
+package tr.com.ogedik.authentication.validation.common;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -12,14 +12,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
 import tr.com.ogedik.authentication.exception.AuthenticationException;
-import tr.com.ogedik.authentication.model.AbstractUser;
-import tr.com.ogedik.authentication.model.AuthenticationRequest;
+import tr.com.ogedik.authentication.request.AuthenticationRequest;
+import tr.com.ogedik.authentication.validation.Validator;
+import tr.com.ogedik.commons.models.BusinessObject;
 
 /**
  * @author orkun.gedik
  */
 @Component
-public class MandatoryFieldValidator<T extends AbstractUser> implements Validator<T> {
+public class MandatoryFieldValidator<T extends BusinessObject> implements Validator<T> {
 
   /**
    * Validates whether all the fields of {@link AuthenticationRequest} are valid or not.

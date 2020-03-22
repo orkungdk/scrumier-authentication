@@ -3,27 +3,31 @@
  */
 package tr.com.ogedik.authentication.mapper;
 
-import tr.com.ogedik.authentication.model.BusinessObject;
+import tr.com.ogedik.authentication.entity.AbstractEntity;
+import tr.com.ogedik.authentication.model.MetaInformation;
+import tr.com.ogedik.commons.constants.Permission;
+import tr.com.ogedik.commons.mapper.AbstractMapper;
+import tr.com.ogedik.commons.models.BusinessObject;
+
+import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- * Interface for the generic mapper between Json objects and java objects
- * 
  * @author orkun.gedik
  */
-public interface AuthenticationMapper<A, B extends BusinessObject> {
-  /**
-   * Transforms implemented A type object to a JAVA object
-   * 
-   * @param object implemented A type object to transform
-   * @return implemented A type object mapped onto a JAVA object
-   */
-  B convert(A object);
+public abstract class AuthenticationMapper<A, B extends BusinessObject> extends AbstractMapper<A, B> {
 
-    /**
-     * Transforms implemented B type object to a JAVA object
-     *
-     * @param object implemented B type object to transform
-     * @return implemented A type object mapped onto a JAVA object
-     */
-  A convert(B object);
+  public MetaInformation getMetaInformation(AbstractEntity entity) {
+    if (entity == null) {
+      return null;
+    }
+
+    return MetaInformation.builder()
+        .createdAt(entity.getCreatedAt())
+        .createdBy(entity.getCreatedBy())
+        .updatedAt(entity.getUpdatedAt())
+        .updatedBy(entity.getUpdateBy())
+        .build();
+  }
 }

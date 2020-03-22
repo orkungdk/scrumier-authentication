@@ -6,7 +6,6 @@ package tr.com.ogedik.authentication.validation;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
-import tr.com.ogedik.authentication.model.BusinessObject;
 
 /**
  * Abstract class for all validation facade
@@ -15,7 +14,7 @@ import tr.com.ogedik.authentication.model.BusinessObject;
  * @author orkun.gedik
  */
 @Component
-public abstract class ValidationFacade<T extends BusinessObject> {
+public abstract class ValidationFacade<T> {
 
   public void validate(T validationRequest, List<Validator<T>> validators) {
     validators.stream().forEach(validator -> validator.validate(validationRequest));

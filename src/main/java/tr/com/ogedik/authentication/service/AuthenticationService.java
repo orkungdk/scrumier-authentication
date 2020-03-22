@@ -3,7 +3,8 @@
  */
 package tr.com.ogedik.authentication.service;
 
-import tr.com.ogedik.authentication.model.AuthenticationRequest;
+import tr.com.ogedik.authentication.model.Authentication;
+import tr.com.ogedik.authentication.request.AuthenticationRequest;
 
 /**
  * @author orkun.gedik
@@ -16,6 +17,6 @@ public interface AuthenticationService {
    * @param authenticationRequest the object of {@link AuthenticationRequest}
    * @return token
    */
-  String authenticate(AuthenticationRequest authenticationRequest);
+  Authentication authenticate(AuthenticationRequest authenticationRequest);
 
 }

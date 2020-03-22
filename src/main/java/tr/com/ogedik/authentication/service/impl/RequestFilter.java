@@ -24,7 +24,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.authentication.exception.AuthenticationException;
 import tr.com.ogedik.authentication.model.Authentication;
-import tr.com.ogedik.authentication.service.ApplicationUserDetailsService;
+import tr.com.ogedik.authentication.service.UserDetailsService;
 import tr.com.ogedik.authentication.util.AuthenticationTokenHelper;
 
 /**
@@ -36,7 +36,7 @@ public class RequestFilter extends OncePerRequestFilter {
   private static final Logger logger = LogManager.getLogger(RequestFilter.class);
 
   @Autowired
-  private ApplicationUserDetailsService userDetailsService;
+  private UserDetailsService userDetailsService;
   @Autowired
   private AuthenticationTokenHelper authenticationTokenHelper;
 
@@ -48,8 +48,8 @@ public class RequestFilter extends OncePerRequestFilter {
     Authentication authentication = createAuthenticatedUser(requestTokenHeader);
 
     // Once we get the token validate it.
-    if (authentication.getUsername() != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-      UserDetails userDetails = this.userDetailsService.loadUserByUsername(authentication.getUsername());
+    if (authentication.getPrincipal() != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+      UserDetails userDetails = this.userDetailsService.loadUserByUsername(authentication.getPrincipal());
 
       // if token is valid configure Spring Security to manually set authentication
       if (authenticationTokenHelper.validateToken(authentication.getToken(), userDetails)) {
@@ -86,7 +86,7 @@ public class RequestFilter extends OncePerRequestFilter {
       String username = authenticationTokenHelper.getUsernameFromToken(token);
       logger.info("User has been found. Username is {}", username);
 
-      return Authentication.builder().username(username).token(token).build();
+      return Authentication.builder().principal(username).token(token).build();
     } catch (IllegalArgumentException e) {
       throw new AuthenticationException(AuthenticationConstants.Exception.UNABLE_GET_TOKEN);
     } catch (ExpiredJwtException e) {

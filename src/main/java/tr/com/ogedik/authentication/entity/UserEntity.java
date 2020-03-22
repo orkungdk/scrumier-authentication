@@ -6,7 +6,6 @@ package tr.com.ogedik.authentication.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,7 +29,7 @@ import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ApplicationUserEntity extends AbstractEntity{
+public class UserEntity extends AbstractEntity{
 
   @Column(name = COLS.USERNAME)
   private String username;
@@ -40,7 +39,7 @@ public class ApplicationUserEntity extends AbstractEntity{
 
   @Column(name = COLS.GROUPS)
   @OneToMany(fetch = FetchType.EAGER)
-  private List<ApplicationGroupEntity> groups;
+  private List<GroupEntity> groups;
 
   @Column(name = COLS.TEAM)
   private String team;
@@ -62,7 +61,7 @@ public class ApplicationUserEntity extends AbstractEntity{
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ApplicationUserEntity that = (ApplicationUserEntity)o;
+    UserEntity that = (UserEntity)o;
 
     return ObjectUtils.equals(that.resourceId, this.resourceId) && ObjectUtils.equals(that.username, this.username)
         && ObjectUtils.equals(that.password, this.password) && ObjectUtils.equals(that.role, this.role)

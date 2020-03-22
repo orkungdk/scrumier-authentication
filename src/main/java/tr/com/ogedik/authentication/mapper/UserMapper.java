@@ -5,37 +5,37 @@ package tr.com.ogedik.authentication.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tr.com.ogedik.authentication.entity.ApplicationUserEntity;
-import tr.com.ogedik.authentication.model.AbstractUser;
-import tr.com.ogedik.authentication.model.ApplicationUser;
+
+import tr.com.ogedik.authentication.entity.UserEntity;
+import tr.com.ogedik.authentication.model.User;
 
 /**
- * Mapper class for {@link ApplicationUserEntity} and {@link AbstractUser}
+ * Mapper class for {@link UserEntity} and {@link tr.com.ogedik.commons.models.AbstractUser}
  * 
  * @author orkun.gedik
  */
 @Service
-public class ApplicationUserMapper extends AbstractAuthenticationMapper<ApplicationUserEntity, ApplicationUser> {
+public class UserMapper extends AuthenticationMapper<UserEntity, User> {
 
   @Autowired
-  ApplicationGroupMapper applicationGroupMapper;
+  private GroupMapper groupMapper;
 
   /**
-   * Maps from {@link ApplicationUserEntity} to {@link ApplicationUser}
+   * Maps from {@link UserEntity} to {@link User}
    * 
-   * @param entity {@link ApplicationUserEntity}
-   * @return {@link ApplicationUser}
+   * @param entity {@link UserEntity}
+   * @return {@link User}
    */
   @Override
-  public ApplicationUser convert(ApplicationUserEntity entity) {
+  public User convert(UserEntity entity) {
     if (entity == null) {
       return null;
     }
-    return ApplicationUser.builder()
+    return User.builder()
         .resourceId(entity.getResourceId())
         .username(entity.getUsername())
         .enrolmentDate(entity.getEnrolmentDate())
-        .groups(applicationGroupMapper.convertToBoList(entity.getGroups()))
+        .groups(groupMapper.convertToBoList(entity.getGroups()))
         .lastLogonDate(entity.getLastLogonDate())
         .metaInformation(getMetaInformation(entity))
         .role(entity.getRole())
@@ -45,26 +45,26 @@ public class ApplicationUserMapper extends AbstractAuthenticationMapper<Applicat
   }
 
   /**
-   * Maps from {@link ApplicationUser} to {@link ApplicationUserEntity}
-   * 
-   * @param bo {@link ApplicationUser}
-   * @return {@link ApplicationUserEntity}
+   * Maps from {@link User} to {@link UserEntity}
+   *
+   * @param bo {@link User}
+   * @return {@link UserEntity}
    */
   @Override
-  public ApplicationUserEntity convert(ApplicationUser bo) {
+  public UserEntity convert(User bo) {
     if (bo == null) {
       return null;
     }
-    ApplicationUserEntity entity = new ApplicationUserEntity();
+    UserEntity entity = new UserEntity();
     entity.setTeam(bo.getTeam());
     entity.setRole(bo.getRole());
     entity.setEnrolmentDate(bo.getEnrolmentDate());
-    entity.setGroups(applicationGroupMapper.convertToEntityList(bo.getGroups()));
+    entity.setGroups(groupMapper.convertToEntityList(bo.getGroups()));
     entity.setLastLogonDate(bo.getLastLogonDate());
     entity.setEnrolmentDate(bo.getEnrolmentDate());
     entity.setUsername(bo.getUsername());
     entity.setPassword(bo.getPassword());
-    
+
     if (bo.getMetaInformation() != null) {
       entity.setUpdatedAt(bo.getMetaInformation().getUpdatedAt());
       entity.setUpdateBy(bo.getMetaInformation().getUpdatedBy());

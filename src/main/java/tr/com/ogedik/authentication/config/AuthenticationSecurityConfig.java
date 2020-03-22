@@ -19,10 +19,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import tr.com.ogedik.authentication.AuthenticationEntrance;
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
-import tr.com.ogedik.authentication.service.ApplicationUserDetailsService;
+import tr.com.ogedik.authentication.service.UserDetailsService;
 import tr.com.ogedik.authentication.service.impl.RequestFilter;
-
-import javax.servlet.Filter;
 
 /**
  * This class extends the {@link WebSecurityConfigurerAdapter}. This is a convenience class that allows customization to
@@ -37,7 +35,7 @@ public class AuthenticationSecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private AuthenticationEntrance authenticationEntrance;
   @Autowired
-  private ApplicationUserDetailsService userDetailsService;
+  private UserDetailsService userDetailsService;
   @Autowired
   private RequestFilter requestFilter;
 
@@ -45,8 +43,7 @@ public class AuthenticationSecurityConfig extends WebSecurityConfigurerAdapter {
    * Configures AuthenticationManager so that it knows from where to load user for matching credentials Use
    * BCryptPasswordEncoder
    * 
-   * @param authenticationManager
-   *          {@link AuthenticationManagerBuilder}
+   * @param authenticationManager {@link AuthenticationManagerBuilder}
    * @throws Exception
    */
   @Autowired

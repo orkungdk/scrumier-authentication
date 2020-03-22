@@ -1,9 +1,7 @@
 /**
  * © 2020 Copyright Amadeus Unauthorised use and disclosure strictly forbidden.
  */
-package tr.com.ogedik.authentication.model;
-
-import java.io.Serializable;
+package tr.com.ogedik.authentication.request;
 
 import javax.validation.constraints.NotNull;
 
@@ -17,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class AuthenticationRequest extends AbstractUser implements Serializable {
+public class AuthenticationRequest {
   @NotNull
   private String username;
   @NotNull

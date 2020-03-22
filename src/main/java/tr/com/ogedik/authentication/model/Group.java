@@ -3,12 +3,14 @@
  */
 package tr.com.ogedik.authentication.model;
 
+import java.util.List;
+
+import javax.validation.constraints.NotNull;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import tr.com.ogedik.authentication.constants.Permission;
-
-import java.util.List;
+import tr.com.ogedik.commons.models.AbstractGroup;
 
 /**
  * @author orkun.gedik
@@ -16,16 +18,17 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-public class ApplicationGroup implements BusinessObject{
+public class Group extends AbstractGroup {
 
   private Long resourceId;
 
+  @NotNull
   private String name;
 
   private String description;
 
   private MetaInformation metaInformation;
 
-  private List<Permission> permissions;
+  private List<GrantedAuthority> authorities;
 
 }

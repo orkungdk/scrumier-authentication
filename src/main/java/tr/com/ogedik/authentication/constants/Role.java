@@ -1,9 +1,11 @@
 package tr.com.ogedik.authentication.constants;
 
+import lombok.experimental.UtilityClass;
+
 /**
  * @author orkun.gedik
  */
 public enum Role {
 
-  ADMIN, MANAGER, DEVELOPER, PDEF;
+  MANAGER, SCRUM_MASTER, PRODUCT_OWNER, DEVELOPER, PDEF;
 }

@@ -3,12 +3,10 @@
  */
 package tr.com.ogedik.authentication.validation;
 
-import tr.com.ogedik.authentication.model.BusinessObject;
-
 /**
  * @author orkun.gedik
  */
-public interface Validator<T extends BusinessObject> {
+public interface Validator<T> {
 
     void validate(T validationRequest);
 }

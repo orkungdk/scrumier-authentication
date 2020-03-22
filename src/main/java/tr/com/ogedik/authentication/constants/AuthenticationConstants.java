@@ -3,14 +3,13 @@
  */
 package tr.com.ogedik.authentication.constants;
 
+import lombok.experimental.UtilityClass;
+
 /**
  * @author orkun.gedik
  */
+@UtilityClass
 public class AuthenticationConstants {
-
-  public static class Qualifier {
-    public static final String AUTH_MANAGER = "WorklogTrackerAuthenticationManager";
-  }
 
   public static class Exception {
     public static final String AUTH_FAIL = "Authentication failed. ";

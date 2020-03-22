@@ -3,6 +3,8 @@
  */
 package tr.com.ogedik.authentication.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,43 +15,51 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
-import tr.com.ogedik.authentication.model.ApplicationGroup;
-import tr.com.ogedik.authentication.model.ApplicationUser;
+import tr.com.ogedik.authentication.model.Group;
 import tr.com.ogedik.authentication.response.AuthenticationResponse;
-import tr.com.ogedik.authentication.service.ApplicationGroupService;
+import tr.com.ogedik.authentication.service.GroupService;
+import tr.com.ogedik.commons.annotations.Restricted;
+import tr.com.ogedik.commons.constants.Permission;
 
 /**
  * @author orkun.gedik
  */
 @RestController
-public class ApplicationGroupController {
+public class GroupController {
+
+  private static final Logger logger = LogManager.getLogger(GroupController.class);
 
   @Autowired
-  ApplicationGroupService applicationGroupService;
+  GroupService groupService;
 
   @GetMapping(AuthenticationConstants.Paths.GROUPS)
   public AuthenticationResponse getGroups() {
-    return AuthenticationResponse.build(applicationGroupService.getGroups());
+    logger.info("The request has been received to return all groups.");
+    return AuthenticationResponse.build(groupService.getGroups());
   }
 
   @GetMapping(AuthenticationConstants.Paths.GROUPS + AuthenticationConstants.Paths.IDENTIFIER)
   public AuthenticationResponse getGroup(@PathVariable Long identifier) {
-    return AuthenticationResponse.build(applicationGroupService.getGroupById(identifier));
+    logger.info("The request has been received to return group with id {}.", identifier);
+    return AuthenticationResponse.build(groupService.getGroupById(identifier));
   }
 
   @PostMapping(AuthenticationConstants.Paths.GROUPS)
-  public AuthenticationResponse createGroup(@RequestBody ApplicationGroup applicationGroup) {
-    return AuthenticationResponse.build(applicationGroupService.create(applicationGroup));
+  public AuthenticationResponse createGroup(@RequestBody Group group) {
+    logger.info("The request has been received to create a group.");
+    return AuthenticationResponse.build(groupService.create(group));
   }
 
   @PutMapping(AuthenticationConstants.Paths.GROUPS)
-  public AuthenticationResponse updateGroup(@RequestBody ApplicationGroup applicationGroup) {
-    return AuthenticationResponse.build(applicationGroupService.update(applicationGroup));
+  public AuthenticationResponse updateGroup(@RequestBody Group group) {
+    logger.info("The request has been received to update {} group.", group.getName());
+    return AuthenticationResponse.build(groupService.update(group));
   }
 
   @DeleteMapping(AuthenticationConstants.Paths.GROUPS + AuthenticationConstants.Paths.IDENTIFIER)
   public AuthenticationResponse deleteGroup(@PathVariable Long identifier) {
-    applicationGroupService.delete(identifier);
+    logger.info("The request has been received to delete group with id {}.", identifier);
+    groupService.delete(identifier);
 
     return AuthenticationResponse.OK();
   }

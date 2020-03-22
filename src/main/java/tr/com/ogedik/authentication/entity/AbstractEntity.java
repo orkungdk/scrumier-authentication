@@ -3,17 +3,16 @@
  */
 package tr.com.ogedik.authentication.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import tr.com.ogedik.authentication.constants.AuthenticationConstants;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import java.time.LocalDateTime;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author orkun.gedik

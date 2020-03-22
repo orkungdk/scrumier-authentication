@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import tr.com.ogedik.commons.models.AbstractUser;
 
 /**
  * @author orkun.gedik
@@ -20,7 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class ApplicationUser extends AbstractUser {
+public class User extends AbstractUser {
 
   private Long resourceId;
   @NotNull
@@ -31,7 +32,7 @@ public class ApplicationUser extends AbstractUser {
 
   private String team;
 
-  private List<ApplicationGroup> groups;
+  private List<Group> groups;
 
   private String role;
 

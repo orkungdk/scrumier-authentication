@@ -8,7 +8,8 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import tr.com.ogedik.authentication.model.AuthenticationRequest;
+import tr.com.ogedik.authentication.request.AuthenticationRequest;
+import tr.com.ogedik.authentication.validation.common.MandatoryFieldValidator;
 
 /**
  * @author orkun.gedik

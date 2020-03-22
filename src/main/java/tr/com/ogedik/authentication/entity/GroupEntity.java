@@ -26,7 +26,7 @@ import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ApplicationGroupEntity extends AbstractEntity {
+public class GroupEntity extends AbstractEntity {
 
   @Column(name = COLS.NAME)
   private String name;

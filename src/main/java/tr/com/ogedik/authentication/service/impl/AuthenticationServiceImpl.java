@@ -4,20 +4,19 @@
 package tr.com.ogedik.authentication.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.authentication.exception.AuthenticationException;
-import tr.com.ogedik.authentication.model.AuthenticationRequest;
-import tr.com.ogedik.authentication.service.ApplicationUserDetailsService;
+import tr.com.ogedik.authentication.model.Authentication;
+import tr.com.ogedik.authentication.request.AuthenticationRequest;
 import tr.com.ogedik.authentication.service.AuthenticationService;
+import tr.com.ogedik.authentication.service.UserDetailsService;
 import tr.com.ogedik.authentication.util.AuthenticationTokenHelper;
 import tr.com.ogedik.authentication.validation.AuthenticationValidationFacade;
 
@@ -28,14 +27,13 @@ import tr.com.ogedik.authentication.validation.AuthenticationValidationFacade;
 public class AuthenticationServiceImpl implements AuthenticationService {
 
   @Autowired
-  @Qualifier(AuthenticationConstants.Qualifier.AUTH_MANAGER)
   private AuthenticationManager authenticationManager;
   @Autowired
   private AuthenticationValidationFacade authenticationValidationFacade;
   @Autowired
   private AuthenticationTokenHelper authenticationTokenHelper;
   @Autowired
-  private ApplicationUserDetailsService userDetailsService;
+  private UserDetailsService userDetailsService;
 
   /**
    * Authenticates user after validating the request
@@ -44,15 +42,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
    * @return generated token
    * @throws AuthenticationException if user is not exist / disabled or the credentials are incorrect
    */
-  public String authenticate(AuthenticationRequest authenticationRequest) {
+  public Authentication authenticate(AuthenticationRequest authenticationRequest) {
     // Validates authentication request
     authenticationValidationFacade.validate(authenticationRequest);
 
     try {
-      Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-          authenticationRequest.getUsername(), authenticationRequest.getPassword()));
+      Authentication authentication = (Authentication)authenticationManager
+          .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
+              authenticationRequest.getPassword()));
+      authentication.setToken( generateToken(authenticationRequest, authentication) );
 
-      return generateToken(authenticationRequest, authentication);
+      return authentication;
     } catch (DisabledException e) {
       throw new AuthenticationException(AuthenticationConstants.Exception.USER_DISABLED);
     } catch (BadCredentialsException e) {
