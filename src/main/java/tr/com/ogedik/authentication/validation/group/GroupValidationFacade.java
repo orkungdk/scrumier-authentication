@@ -5,10 +5,10 @@ package tr.com.ogedik.authentication.validation.group;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import tr.com.ogedik.authentication.model.Group;
-import tr.com.ogedik.authentication.model.User;
-import tr.com.ogedik.authentication.validation.common.MandatoryFieldValidator;
-import tr.com.ogedik.authentication.validation.ValidationFacade;
+import tr.com.ogedik.commons.models.Group;
+import tr.com.ogedik.commons.models.User;
+import tr.com.ogedik.commons.validation.MandatoryFieldValidator;
+import tr.com.ogedik.commons.validation.ValidationFacade;
 import tr.com.ogedik.authentication.validation.user.UserCreationValidator;
 
 import java.util.Arrays;

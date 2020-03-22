@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tr.com.ogedik.authentication.entity.UserEntity;
-import tr.com.ogedik.authentication.model.User;
+import tr.com.ogedik.commons.models.User;
 
 /**
- * Mapper class for {@link UserEntity} and {@link tr.com.ogedik.commons.models.AbstractUser}
+ * Mapper class for {@link UserEntity} and {@link tr.com.ogedik.commons.models.User}
  * 
  * @author orkun.gedik
  */

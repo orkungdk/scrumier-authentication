@@ -15,11 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
-import tr.com.ogedik.authentication.model.Group;
+import tr.com.ogedik.commons.models.Group;
 import tr.com.ogedik.authentication.response.AuthenticationResponse;
 import tr.com.ogedik.authentication.service.GroupService;
-import tr.com.ogedik.commons.annotations.Restricted;
-import tr.com.ogedik.commons.constants.Permission;
 
 /**
  * @author orkun.gedik

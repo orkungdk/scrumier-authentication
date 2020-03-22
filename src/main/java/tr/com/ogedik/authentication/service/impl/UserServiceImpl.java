@@ -15,10 +15,11 @@ import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.authentication.entity.UserEntity;
 import tr.com.ogedik.authentication.exception.AuthenticationException;
 import tr.com.ogedik.authentication.mapper.UserMapper;
-import tr.com.ogedik.authentication.model.User;
+import tr.com.ogedik.commons.models.User;
 import tr.com.ogedik.authentication.repository.UserRepository;
 import tr.com.ogedik.authentication.service.UserService;
 import tr.com.ogedik.authentication.validation.user.UserValidationFacade;
+import tr.com.ogedik.commons.utils.ResourceIdGenerator;
 
 /**
  * @author orkun.gedik
@@ -34,6 +35,11 @@ public class UserServiceImpl implements UserService {
   private UserMapper mapper;
 
   @Override
+  public boolean isExist(String username) {
+    return repository.existsByUsername(username);
+  }
+
+  @Override
   public User getUserByUsername(String username) {
     UserEntity entity = repository.findByUsername(username);
     return ObjectUtils.isEmpty(entity) ? null : mapper.convert(entity);
@@ -46,6 +52,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public User create(User user) {
+    user.setResourceId(ResourceIdGenerator.generate());
     validationFacade.validateCreate(user);
     user.setEnrolmentDate(LocalDateTime.now());
 

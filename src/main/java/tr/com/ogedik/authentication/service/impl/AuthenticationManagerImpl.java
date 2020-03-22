@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -15,12 +14,11 @@ import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.authentication.controller.AuthenticationController;
 import tr.com.ogedik.authentication.model.Authentication;
 import tr.com.ogedik.authentication.model.GrantedAuthority;
-import tr.com.ogedik.authentication.model.Group;
-import tr.com.ogedik.authentication.model.User;
+import tr.com.ogedik.commons.models.Group;
+import tr.com.ogedik.commons.models.User;
 import tr.com.ogedik.authentication.service.UserService;
 import tr.com.ogedik.commons.utils.ListUtils;
 
-import java.util.Collection;
 import java.util.List;
 
 /**

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import tr.com.ogedik.authentication.entity.GroupEntity;
 import tr.com.ogedik.authentication.model.GrantedAuthority;
-import tr.com.ogedik.authentication.model.Group;
+import tr.com.ogedik.commons.models.Group;
 import tr.com.ogedik.commons.constants.Permission;
 
 /**
@@ -32,7 +32,7 @@ public class GroupMapper extends AuthenticationMapper<GroupEntity, Group> {
         .description(entity.getDescription())
         .metaInformation(getMetaInformation(entity))
         .name(entity.getName())
-        .authorities(convertToEnumList(entity.getPermissions()))
+        .permissions(convertToEnumList(entity.getPermissions()))
         .build();
   }
 
@@ -48,7 +48,7 @@ public class GroupMapper extends AuthenticationMapper<GroupEntity, Group> {
     entity.setResourceId(bo.getResourceId());
     entity.setDescription(bo.getDescription());
     entity.setName(bo.getName());
-    entity.setPermissions(convertFromEnumList(bo.getAuthorities()));
+    entity.setPermissions(convertFromEnumList(bo.getPermissions()));
     entity.setCreatedAt(bo.getMetaInformation().getCreatedAt());
     entity.setCreatedBy(bo.getMetaInformation().getCreatedBy());
     entity.setUpdatedAt(bo.getMetaInformation().getUpdatedAt());
@@ -57,13 +57,13 @@ public class GroupMapper extends AuthenticationMapper<GroupEntity, Group> {
     return entity;
   }
 
-  private List<GrantedAuthority> convertToEnumList(List<String> permissions) {
+  private List<Permission> convertToEnumList(List<String> permissions) {
     return permissions.stream()
-        .map(permission -> new GrantedAuthority(Enum.valueOf(Permission.class, permission)))
+        .map(permission -> Enum.valueOf(Permission.class, permission))
         .collect(Collectors.toList());
   }
 
-  private List<String> convertFromEnumList(List<GrantedAuthority> authorities) {
-    return authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+  private List<String> convertFromEnumList(List<Permission> authorities) {
+    return authorities.stream().map(Permission::name).collect(Collectors.toList());
   }
 }

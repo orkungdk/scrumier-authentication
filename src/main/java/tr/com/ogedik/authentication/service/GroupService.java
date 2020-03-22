@@ -3,7 +3,7 @@
  */
 package tr.com.ogedik.authentication.service;
 
-import tr.com.ogedik.authentication.model.Group;
+import tr.com.ogedik.commons.models.Group;
 
 import java.util.List;
 
