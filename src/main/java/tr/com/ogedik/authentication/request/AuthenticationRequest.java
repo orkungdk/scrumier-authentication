@@ -8,6 +8,8 @@ import javax.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import tr.com.ogedik.commons.annotations.Required;
+import tr.com.ogedik.commons.models.BusinessObject;
 
 /**
  * @author orkun.gedik
@@ -15,10 +17,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class AuthenticationRequest {
-  @NotNull
+public class AuthenticationRequest implements BusinessObject {
+  @Required
   private String username;
-  @NotNull
+  @Required
   private String password;
 
 }

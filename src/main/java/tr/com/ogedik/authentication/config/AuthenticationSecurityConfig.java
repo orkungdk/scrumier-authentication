@@ -5,6 +5,7 @@ package tr.com.ogedik.authentication.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,6 +29,7 @@ import tr.com.ogedik.authentication.service.impl.RequestFilter;
  * 
  * @author orkun.gedik
  */
+@ComponentScan("tr.com.ogedik.commons.validation")
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
