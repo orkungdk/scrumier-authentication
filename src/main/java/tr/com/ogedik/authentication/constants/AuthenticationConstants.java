@@ -52,5 +52,10 @@ public class AuthenticationConstants {
     public static final String DESCRIPTION = "description";
     public static final String GROUPS = "groups";
     public static final String PERMISSIONS = "permissions";
+    public static final String RESOURCE_ID = "resourceId";
+    public static final String CREATED_AT = "createdAt";
+    public static final String UPDATED_AT = "updatedAt";
+    public static final String CREATED_BY = "createdBy";
+    public static final String UPDATED_BY = "updatedBy";
   }
 }

@@ -20,7 +20,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
-import tr.com.ogedik.commons.entity.AbstractEntity;
 
 /**
  * @author orkun.gedik
