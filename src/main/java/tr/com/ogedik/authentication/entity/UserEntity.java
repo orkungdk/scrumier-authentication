@@ -6,6 +6,7 @@ package tr.com.ogedik.authentication.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,6 +20,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
+import tr.com.ogedik.commons.entity.AbstractEntity;
 
 /**
  * @author orkun.gedik
@@ -29,28 +31,25 @@ import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 @NoArgsConstructor
 @Getter
 @Setter
-public class UserEntity extends AbstractEntity{
+public class UserEntity extends AbstractEntity {
 
-  @Column(name = COLS.USERNAME)
+  @Column(name = AuthenticationConstants.COLS.USERNAME)
   private String username;
 
-  @Column(name = COLS.PASSWORD)
+  @Column(name = AuthenticationConstants.COLS.PASSWORD)
   private String password;
 
-  @Column(name = COLS.GROUPS)
-  @OneToMany(fetch = FetchType.EAGER)
+  @Column(name = AuthenticationConstants.COLS.GROUPS)
+  @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
   private List<GroupEntity> groups;
 
-  @Column(name = COLS.TEAM)
+  @Column(name = AuthenticationConstants.COLS.TEAM)
   private String team;
 
-  @Column(name = COLS.ROLE)
-  private String role;
-
-  @Column(name = COLS.ENROLMENT_DATE)
+  @Column(name = AuthenticationConstants.COLS.ENROLMENT_DATE)
   private LocalDateTime enrolmentDate;
 
-  @Column(name = COLS.LAST_LOGON_DATE)
+  @Column(name = AuthenticationConstants.COLS.LAST_LOGON_DATE)
   private LocalDateTime lastLogonDate;
 
   @Override
@@ -64,8 +63,8 @@ public class UserEntity extends AbstractEntity{
     UserEntity that = (UserEntity)o;
 
     return ObjectUtils.equals(that.resourceId, this.resourceId) && ObjectUtils.equals(that.username, this.username)
-        && ObjectUtils.equals(that.password, this.password) && ObjectUtils.equals(that.role, this.role)
-        && ObjectUtils.equals(that.team, this.team) && ObjectUtils.equals(that.enrolmentDate, this.enrolmentDate)
+        && ObjectUtils.equals(that.password, this.password) && ObjectUtils.equals(that.team, this.team)
+        && ObjectUtils.equals(that.enrolmentDate, this.enrolmentDate)
         && ObjectUtils.equals(that.lastLogonDate, this.lastLogonDate);
   }
 }

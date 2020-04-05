@@ -25,7 +25,7 @@ public class Authentication implements org.springframework.security.core.Authent
   @NotNull
   private String token;
 
-  private List<GrantedAuthority> authorities;
+  private List<UserGrantedAuthority> authorities;
 
   private boolean isAuthenticated;
   

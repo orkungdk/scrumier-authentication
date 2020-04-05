@@ -14,14 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
-import tr.com.ogedik.authentication.constants.Role;
 import tr.com.ogedik.authentication.request.AuthenticationRequest;
 import tr.com.ogedik.authentication.response.AuthenticationResponse;
 import tr.com.ogedik.authentication.service.AuthenticationService;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import tr.com.ogedik.commons.constants.Permission;
 
 /**
  * @author orkun.gedik
@@ -41,11 +37,9 @@ public class AuthenticationController {
     return AuthenticationResponse.build(authenticationService.authenticate(authenticationRequest));
   }
 
-  @GetMapping(AuthenticationConstants.Paths.ROLES)
-  public ResponseEntity getRoles() {
-    logger.info("The request has been received to return all roles." );
-    List<String> roles = Arrays.asList(Role.values()).stream().map(Role::toString).collect(Collectors.toList());
-
-    return AuthenticationResponse.build(roles);
+  @GetMapping(AuthenticationConstants.Paths.PERMISSIONS)
+  public ResponseEntity getPermissions() {
+    logger.info("The request has been received to retrieve list of available permissions.");
+    return AuthenticationResponse.build(Permission.class.getEnumConstants());
   }
 }

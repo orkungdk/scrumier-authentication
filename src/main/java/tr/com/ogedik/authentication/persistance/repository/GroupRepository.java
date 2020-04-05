@@ -1,4 +1,4 @@
-package tr.com.ogedik.authentication.repository;
+package tr.com.ogedik.authentication.persistance.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

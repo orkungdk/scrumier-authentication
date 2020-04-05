@@ -44,7 +44,7 @@ public class RequestFilter extends OncePerRequestFilter {
   public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
       throws ServletException, IOException {
     logger.info("Request session ({}) is being filtering...", request.getRequestedSessionId());
-    String requestTokenHeader = request.getHeader(AuthenticationConstants.Header.AUTH);
+    String requestTokenHeader = request.getHeader(AuthenticationConstants.Header.AUTH_TOKEN);
     Authentication authentication = createAuthenticatedUser(requestTokenHeader);
 
     // Once we get the token validate it.

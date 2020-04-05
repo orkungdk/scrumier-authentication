@@ -12,12 +12,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
+import tr.com.ogedik.commons.annotations.Authorities;
+import tr.com.ogedik.commons.annotations.Restricted;
+import tr.com.ogedik.commons.constants.Permission;
 import tr.com.ogedik.commons.models.Group;
 import tr.com.ogedik.authentication.response.AuthenticationResponse;
 import tr.com.ogedik.authentication.service.GroupService;
+
+import java.util.List;
 
 /**
  * @author orkun.gedik
@@ -49,7 +55,9 @@ public class GroupController {
   }
 
   @PutMapping(AuthenticationConstants.Paths.GROUPS)
-  public AuthenticationResponse updateGroup(@RequestBody Group group) {
+  @Restricted(permission =  Permission.ADMIN )
+  public AuthenticationResponse updateGroup(@RequestBody Group group, @RequestHeader(
+      name = AuthenticationConstants.Header.AUTHORITIES) @Authorities List<String> authorities) {
     logger.info("The request has been received to update {} group.", group.getName());
     return AuthenticationResponse.build(groupService.update(group));
   }

@@ -3,20 +3,21 @@
  */
 package tr.com.ogedik.authentication.service.impl;
 
+import java.util.List;
+
 import org.apache.commons.lang.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.authentication.entity.GroupEntity;
 import tr.com.ogedik.authentication.exception.AuthenticationException;
 import tr.com.ogedik.authentication.mapper.GroupMapper;
-import tr.com.ogedik.commons.models.Group;
-import tr.com.ogedik.authentication.repository.GroupRepository;
+import tr.com.ogedik.authentication.persistance.GroupPersistenceManager;
 import tr.com.ogedik.authentication.service.GroupService;
 import tr.com.ogedik.authentication.validation.group.GroupValidationFacade;
+import tr.com.ogedik.commons.models.Group;
 import tr.com.ogedik.commons.utils.ResourceIdGenerator;
-
-import java.util.List;
 
 /**
  * @author orkun.gedik
@@ -25,7 +26,7 @@ import java.util.List;
 public class GroupServiceImpl implements GroupService {
 
   @Autowired
-  private GroupRepository repository;
+  private GroupPersistenceManager persistenceManager;
   @Autowired
   private GroupValidationFacade validationFacade;
   @Autowired
@@ -33,19 +34,19 @@ public class GroupServiceImpl implements GroupService {
 
   @Override
   public List<Group> getGroups() {
-    return mapper.convertToBoList(repository.findAll());
+    return mapper.convertToBoList(persistenceManager.findAll());
   }
 
   @Override
   public Group getGroupById(Long id) {
-    return mapper.convert(repository.findByResourceId(id));
+    return mapper.convert(persistenceManager.findByResourceId(id));
   }
 
   @Override
   public Group create(Group group) {
     group.setResourceId(ResourceIdGenerator.generate());
     validationFacade.validate(group);
-    GroupEntity entity = repository.save(mapper.convert(group));
+    GroupEntity entity = persistenceManager.save(mapper.convert(group));
 
     return mapper.convert(entity);
   }
@@ -53,17 +54,17 @@ public class GroupServiceImpl implements GroupService {
   @Override
   public Group update(Group group) {
     validationFacade.validate(group);
-    GroupEntity entity = repository.save(mapper.convert(group));
+    GroupEntity entity = persistenceManager.save(mapper.convert(group));
 
     return mapper.convert(entity);
   }
 
   @Override
   public void delete(Long id) {
-    if (BooleanUtils.isFalse(repository.existsByResourceId(id))) {
+    if (BooleanUtils.isFalse(persistenceManager.existsByResourceId(id))) {
       throw new AuthenticationException(AuthenticationConstants.Exception.GROUP_NOT_FOUND);
 
     }
-    repository.deleteByResourceId(id);
+    persistenceManager.deleteByResourceId(id);
   }
 }

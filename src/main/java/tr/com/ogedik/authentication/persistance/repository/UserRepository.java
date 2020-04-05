@@ -1,7 +1,7 @@
 /**
  * © 2020 Copyright Amadeus Unauthorised use and disclosure strictly forbidden.
  */
-package tr.com.ogedik.authentication.repository;
+package tr.com.ogedik.authentication.persistance.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

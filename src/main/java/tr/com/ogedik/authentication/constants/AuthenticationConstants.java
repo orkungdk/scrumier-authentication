@@ -25,7 +25,8 @@ public class AuthenticationConstants {
   }
 
   public static class Header {
-    public static final String AUTH = "Authorization";
+    public static final String AUTH_TOKEN = "Auth-Token";
+    public static final String AUTHORITIES = "Authorities";
   }
 
   public static class Paths {
@@ -33,11 +34,23 @@ public class AuthenticationConstants {
     public static final String USERS = "/users";
     public static final String GROUPS = "/groups";
     public static final String IDENTIFIER = "/{identifier}";
-      public static final String ROLES = "/roles";
+      public static final String PERMISSIONS = "/permissions";
   }
 
   public static class Entity {
     public static final String APPLICATION_USER = "APP_USER";
     public static final String APPLICATION_GROUP = "APP_GROUP";
+  }
+
+  public static class COLS {
+    public static final String USERNAME = "username";
+    public static final String PASSWORD = "password";
+    public static final String TEAM = "team";
+    public static final String ENROLMENT_DATE = "enrolmentDate";
+    public static final String LAST_LOGON_DATE = "lastLogonDate";
+    public static final String NAME = "name";
+    public static final String DESCRIPTION = "description";
+    public static final String GROUPS = "groups";
+    public static final String PERMISSIONS = "permissions";
   }
 }

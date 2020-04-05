@@ -38,7 +38,6 @@ public class UserMapper extends AuthenticationMapper<UserEntity, User> {
         .groups(groupMapper.convertToBoList(entity.getGroups()))
         .lastLogonDate(entity.getLastLogonDate())
         .metaInformation(getMetaInformation(entity))
-        .role(entity.getRole())
         .password(entity.getPassword())
         .team(entity.getTeam())
         .build();
@@ -56,8 +55,8 @@ public class UserMapper extends AuthenticationMapper<UserEntity, User> {
       return null;
     }
     UserEntity entity = new UserEntity();
+    entity.setResourceId(bo.getResourceId());
     entity.setTeam(bo.getTeam());
-    entity.setRole(bo.getRole());
     entity.setEnrolmentDate(bo.getEnrolmentDate());
     entity.setGroups(groupMapper.convertToEntityList(bo.getGroups()));
     entity.setLastLogonDate(bo.getLastLogonDate());
@@ -70,8 +69,8 @@ public class UserMapper extends AuthenticationMapper<UserEntity, User> {
       entity.setUpdateBy(bo.getMetaInformation().getUpdatedBy());
       entity.setCreatedAt(bo.getMetaInformation().getCreatedAt());
       entity.setCreatedBy(bo.getMetaInformation().getCreatedBy());
-      entity.setResourceId(bo.getResourceId());
     }
+
     return entity;
   }
 }

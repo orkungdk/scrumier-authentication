@@ -15,10 +15,10 @@ import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.authentication.entity.UserEntity;
 import tr.com.ogedik.authentication.exception.AuthenticationException;
 import tr.com.ogedik.authentication.mapper.UserMapper;
-import tr.com.ogedik.commons.models.User;
-import tr.com.ogedik.authentication.repository.UserRepository;
+import tr.com.ogedik.authentication.persistance.UserPersistenceManager;
 import tr.com.ogedik.authentication.service.UserService;
 import tr.com.ogedik.authentication.validation.user.UserValidationFacade;
+import tr.com.ogedik.commons.models.User;
 import tr.com.ogedik.commons.utils.ResourceIdGenerator;
 
 /**
@@ -28,26 +28,26 @@ import tr.com.ogedik.commons.utils.ResourceIdGenerator;
 public class UserServiceImpl implements UserService {
 
   @Autowired
-  private UserRepository repository;
+  private UserPersistenceManager persistenceManager;
   @Autowired
   private UserValidationFacade validationFacade;
   @Autowired
   private UserMapper mapper;
 
   @Override
+  public List<User> getAllUsers() {
+    return mapper.convertToBoList(persistenceManager.findAll());
+  }
+
+  @Override
   public boolean isExist(String username) {
-    return repository.existsByUsername(username);
+    return persistenceManager.existsByUsername(username);
   }
 
   @Override
   public User getUserByUsername(String username) {
-    UserEntity entity = repository.findByUsername(username);
+    UserEntity entity = persistenceManager.findByUsername(username);
     return ObjectUtils.isEmpty(entity) ? null : mapper.convert(entity);
-  }
-
-  @Override
-  public List<User> getAllUsers() {
-    return mapper.convertToBoList(repository.findAll());
   }
 
   @Override
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
     validationFacade.validateCreate(user);
     user.setEnrolmentDate(LocalDateTime.now());
 
-    UserEntity savedEntity = repository.save(mapper.convert(user));
+    UserEntity savedEntity = persistenceManager.save(mapper.convert(user));
 
     return mapper.convert(savedEntity);
   }
@@ -64,17 +64,22 @@ public class UserServiceImpl implements UserService {
   @Override
   public User update(User user) {
     validationFacade.validateUpdate(user);
-    UserEntity entity = repository.save(mapper.convert(user));
 
-    return mapper.convert(entity);
+    UserEntity foundUser = persistenceManager.findByUsername(user.getUsername());
+    user.setResourceId(foundUser.getResourceId());
+    UserEntity userToBeUpdated = mapper.convert(user);
+
+    UserEntity updatedEntity = persistenceManager.update(userToBeUpdated);
+
+    return mapper.convert(updatedEntity);
   }
 
   @Override
   public void delete(String username) {
-    if (BooleanUtils.isFalse(repository.existsByUsername(username))) {
+    if (BooleanUtils.isFalse(persistenceManager.existsByUsername(username))) {
       throw new AuthenticationException(AuthenticationConstants.Exception.USER_NOT_FOUND);
     }
 
-    repository.deleteByUsername(username);
+    persistenceManager.deleteByUsername(username);
   }
 }

@@ -13,35 +13,38 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.authentication.exception.AuthenticationException;
+import tr.com.ogedik.authentication.util.AuthenticationUtil;
+import tr.com.ogedik.commons.models.Group;
 import tr.com.ogedik.commons.models.User;
 import tr.com.ogedik.authentication.service.UserDetailsService;
 import tr.com.ogedik.authentication.service.UserService;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /**
  * @author orkun.gedik
  */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private static final Logger logger = LogManager.getLogger(UserDetailsServiceImpl.class);
+  private static final Logger logger = LogManager.getLogger(UserDetailsServiceImpl.class);
 
-    @Autowired
-    private UserService userService;
+  @Autowired
+  private UserService userService;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userService.getUserByUsername(username);
-        
-        if (user == null) {
-            logger.warn("ApplicationUser cannot be found in database. Username is {}", username);
-            throw new AuthenticationException(AuthenticationConstants.Exception.USER_NOT_FOUND);
-        }
-        
+  @Override
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    User user = userService.getUserByUsername(username);
+
+    if (user == null) {
+      logger.warn("ApplicationUser cannot be found in database. Username is {}", username);
+      throw new AuthenticationException(AuthenticationConstants.Exception.USER_NOT_FOUND);
+    }
+
     return org.springframework.security.core.userdetails.User.builder()
         .username(user.getUsername())
         .password(user.getPassword())
-        .authorities(Arrays.asList(new SimpleGrantedAuthority(user.getRole())))
+        .authorities(AuthenticationUtil.getAuthorities(user.getGroups()))
         .build();
-    }
+  }
 }

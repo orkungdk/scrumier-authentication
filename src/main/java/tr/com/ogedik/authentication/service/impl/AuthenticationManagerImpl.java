@@ -10,16 +10,13 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
+
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.authentication.controller.AuthenticationController;
 import tr.com.ogedik.authentication.model.Authentication;
-import tr.com.ogedik.authentication.model.GrantedAuthority;
-import tr.com.ogedik.commons.models.Group;
-import tr.com.ogedik.commons.models.User;
 import tr.com.ogedik.authentication.service.UserService;
-import tr.com.ogedik.commons.utils.ListUtils;
-
-import java.util.List;
+import tr.com.ogedik.authentication.util.AuthenticationUtil;
+import tr.com.ogedik.commons.models.User;
 
 /**
  * @author orkun.gedik
@@ -47,21 +44,14 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
     if (!StringUtils.equalsIgnoreCase(user.getPassword(), authentication.getCredentials())) {
       throw new BadCredentialsException(AuthenticationConstants.Exception.AUTH_FAIL);
     }
+    logger.info("Username and password validations are OK. Authentication is being initialized.");
 
     return Authentication.builder()
-        .authorities(getAuthorities(user.getGroups()))
+        .authorities(AuthenticationUtil.getAuthorities(user.getGroups()))
         .principal(user.getUsername())
         .credentials(user.getPassword())
         .isAuthenticated(true)
         .build();
   }
 
-  private List<GrantedAuthority> getAuthorities(List<Group> groups) {
-    try {
-      return (List<GrantedAuthority>)ListUtils.mergeNested(groups, "authorities");
-    } catch (IllegalAccessException e) {
-      logger.warn("Cannot parse user permissions. Authentication will be provided without authorities");
-      return null;
-    }
-  }
 }

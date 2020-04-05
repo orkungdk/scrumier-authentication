@@ -3,7 +3,7 @@
  */
 package tr.com.ogedik.authentication.mapper;
 
-import tr.com.ogedik.authentication.entity.AbstractEntity;
+import tr.com.ogedik.commons.entity.AbstractEntity;
 import tr.com.ogedik.commons.models.MetaInformation;
 import tr.com.ogedik.commons.mapper.AbstractMapper;
 import tr.com.ogedik.commons.models.BusinessObject;
