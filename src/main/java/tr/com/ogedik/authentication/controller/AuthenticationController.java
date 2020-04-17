@@ -6,7 +6,6 @@ package tr.com.ogedik.authentication.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.authentication.request.AuthenticationRequest;
-import tr.com.ogedik.authentication.response.AuthenticationResponse;
+import tr.com.ogedik.commons.response.AbstractResponse;
 import tr.com.ogedik.authentication.service.AuthenticationService;
 import tr.com.ogedik.commons.constants.Permission;
 
@@ -32,14 +31,14 @@ public class AuthenticationController {
   private AuthenticationService authenticationService;
 
   @PostMapping(AuthenticationConstants.Paths.AUTHENTICATE)
-  public ResponseEntity createAuthToken(@RequestBody AuthenticationRequest authenticationRequest) {
+  public AbstractResponse createAuthToken(@RequestBody AuthenticationRequest authenticationRequest) {
     logger.info("The request has been received to create authentication token." );
-    return AuthenticationResponse.build(authenticationService.authenticate(authenticationRequest));
+    return AbstractResponse.build(authenticationService.authenticate(authenticationRequest));
   }
 
   @GetMapping(AuthenticationConstants.Paths.PERMISSIONS)
-  public ResponseEntity getPermissions() {
+  public AbstractResponse getPermissions() {
     logger.info("The request has been received to retrieve list of available permissions.");
-    return AuthenticationResponse.build(Permission.class.getEnumConstants());
+    return AbstractResponse.build(Permission.class.getEnumConstants());
   }
 }

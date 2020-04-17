@@ -1,7 +1,7 @@
 /**
  * © 2020 Copyright Amadeus Unauthorised use and disclosure strictly forbidden.
  */
-package tr.com.ogedik.authentication.persistance;
+package tr.com.ogedik.authentication.persistance.manager;
 
 import java.util.List;
 

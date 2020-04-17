@@ -13,7 +13,7 @@ import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.authentication.entity.GroupEntity;
 import tr.com.ogedik.authentication.exception.AuthenticationException;
 import tr.com.ogedik.authentication.mapper.GroupMapper;
-import tr.com.ogedik.authentication.persistance.GroupPersistenceManager;
+import tr.com.ogedik.authentication.persistance.manager.GroupPersistenceManager;
 import tr.com.ogedik.authentication.service.GroupService;
 import tr.com.ogedik.authentication.validation.group.GroupValidationFacade;
 import tr.com.ogedik.commons.models.Group;

@@ -6,7 +6,6 @@ package tr.com.ogedik.authentication.service.impl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
@@ -14,13 +13,9 @@ import org.springframework.stereotype.Service;
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.authentication.exception.AuthenticationException;
 import tr.com.ogedik.authentication.util.AuthenticationUtil;
-import tr.com.ogedik.commons.models.Group;
 import tr.com.ogedik.commons.models.User;
 import tr.com.ogedik.authentication.service.UserDetailsService;
 import tr.com.ogedik.authentication.service.UserService;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 /**
  * @author orkun.gedik

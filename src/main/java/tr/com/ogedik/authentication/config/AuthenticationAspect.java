@@ -8,6 +8,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.context.annotation.Configuration;
 import tr.com.ogedik.commons.annotations.Restricted;
+import tr.com.ogedik.commons.aspect.RestrictionAspect;
 
 /**
  * Authentication aspect configuration
@@ -16,11 +17,11 @@ import tr.com.ogedik.commons.annotations.Restricted;
  */
 @Aspect
 @Configuration
-public class AuthorizationAspect {
+public class AuthenticationAspect {
 
   @Around("@annotation(restricted)")
   public void authorize(ProceedingJoinPoint point, Restricted restricted) {
-    tr.com.ogedik.commons.aspect.AuthorizationAspect.authorize(point, restricted);
+    RestrictionAspect.authorize(point, restricted);
   }
 
 }

@@ -15,7 +15,7 @@ import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.authentication.entity.UserEntity;
 import tr.com.ogedik.authentication.exception.AuthenticationException;
 import tr.com.ogedik.authentication.mapper.UserMapper;
-import tr.com.ogedik.authentication.persistance.UserPersistenceManager;
+import tr.com.ogedik.authentication.persistance.manager.UserPersistenceManager;
 import tr.com.ogedik.authentication.service.UserService;
 import tr.com.ogedik.authentication.validation.user.UserValidationFacade;
 import tr.com.ogedik.commons.models.User;

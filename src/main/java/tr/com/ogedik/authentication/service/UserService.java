@@ -26,7 +26,6 @@ public interface UserService {
   User getUserByUsername(String username);
 
   /**
-   * ToDo : Add pagination
    * Returns all users
    *
    * @return List of {@link User}

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.commons.models.User;
-import tr.com.ogedik.authentication.response.AuthenticationResponse;
+import tr.com.ogedik.commons.response.AbstractResponse;
 import tr.com.ogedik.authentication.service.UserService;
 
 /**
@@ -30,35 +30,35 @@ public class UserController {
   private UserService userService;
 
   @GetMapping(AuthenticationConstants.Paths.USERS)
-  public AuthenticationResponse getUsers() {
+  public AbstractResponse getUsers() {
     logger.info("The request has been received to return all users.");
-    return AuthenticationResponse.build(userService.getAllUsers());
+    return AbstractResponse.build(userService.getAllUsers());
   }
 
   @GetMapping(AuthenticationConstants.Paths.USERS + AuthenticationConstants.Paths.IDENTIFIER)
-  public AuthenticationResponse getUser(@PathVariable String identifier) {
+  public AbstractResponse getUser(@PathVariable String identifier) {
     logger.info("The request has been received to return an user with id {}.", identifier);
-    return AuthenticationResponse.build(userService.getUserByUsername(identifier));
+    return AbstractResponse.build(userService.getUserByUsername(identifier));
   }
 
   @PostMapping(AuthenticationConstants.Paths.USERS)
-  public AuthenticationResponse createUser(@RequestBody User requestUser) {
+  public AbstractResponse createUser(@RequestBody User requestUser) {
     logger.info("The request has been received to create an user.");
-    return AuthenticationResponse.build(userService.create(requestUser));
+    return AbstractResponse.build(userService.create(requestUser));
   }
 
   @PutMapping(AuthenticationConstants.Paths.USERS)
-  public AuthenticationResponse updateUser(@RequestBody User requestUser) {
+  public AbstractResponse updateUser(@RequestBody User requestUser) {
     logger.info("The request has been received to update an user.");
-    return AuthenticationResponse.build(userService.update(requestUser));
+    return AbstractResponse.build(userService.update(requestUser));
   }
 
   @DeleteMapping(AuthenticationConstants.Paths.USERS + AuthenticationConstants.Paths.IDENTIFIER)
-  public AuthenticationResponse deleteUser(@PathVariable String identifier) {
+  public AbstractResponse deleteUser(@PathVariable String identifier) {
     logger.info("The request has been received to delete an user with id {}.", identifier);
     userService.delete(identifier);
 
-    return AuthenticationResponse.OK();
+    return AbstractResponse.OK();
   }
 
 }

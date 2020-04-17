@@ -1,7 +1,7 @@
 /**
  * © 2020 Copyright Amadeus Unauthorised use and disclosure strictly forbidden.
  */
-package tr.com.ogedik.authentication.persistance.cache;
+package tr.com.ogedik.authentication.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

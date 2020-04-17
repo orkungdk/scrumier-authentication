@@ -12,7 +12,7 @@
     <artifactId>authentication</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>authentication</name>
-    <description>Authentication service for Worklog Tracker for Jira</description>
+    <description>Authentication service for Jira Time Tracking</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -21,6 +21,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>tr.com.ogedik</groupId>
+            <artifactId>commons</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -118,11 +123,6 @@
             <artifactId>spring-kafka-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>tr.com.ogedik</groupId>
-            <artifactId>commons</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -143,7 +143,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
     <build>
         <plugins>
             <plugin>
@@ -152,5 +151,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
