@@ -13,11 +13,11 @@ import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.authentication.entity.GroupEntity;
 import tr.com.ogedik.authentication.exception.AuthenticationException;
 import tr.com.ogedik.authentication.mapper.GroupMapper;
+import tr.com.ogedik.authentication.model.AuthenticationGroup;
 import tr.com.ogedik.authentication.persistance.manager.GroupPersistenceManager;
 import tr.com.ogedik.authentication.service.GroupService;
+import tr.com.ogedik.authentication.util.ResourceIdGenerator;
 import tr.com.ogedik.authentication.validation.group.GroupValidationFacade;
-import tr.com.ogedik.commons.models.Group;
-import tr.com.ogedik.commons.utils.ResourceIdGenerator;
 
 /**
  * @author orkun.gedik
@@ -30,33 +30,33 @@ public class GroupServiceImpl implements GroupService {
   @Autowired
   private GroupValidationFacade validationFacade;
   @Autowired
-  private GroupMapper mapper;
+  private GroupMapper groupMapper;
 
   @Override
-  public List<Group> getGroups() {
-    return mapper.convertToBoList(persistenceManager.findAll());
+  public List<AuthenticationGroup> getGroups() {
+    return groupMapper.convert(persistenceManager.findAll());
   }
 
   @Override
-  public Group getGroupById(Long id) {
-    return mapper.convert(persistenceManager.findByResourceId(id));
+  public AuthenticationGroup getGroupById(Long id) {
+    return groupMapper.convert(persistenceManager.findByResourceId(id));
   }
 
   @Override
-  public Group create(Group group) {
+  public AuthenticationGroup create(AuthenticationGroup group) {
+    validationFacade.validate(group);
     group.setResourceId(ResourceIdGenerator.generate());
-    validationFacade.validate(group);
-    GroupEntity entity = persistenceManager.save(mapper.convert(group));
+    GroupEntity entity = persistenceManager.save(groupMapper.convert(group));
 
-    return mapper.convert(entity);
+    return groupMapper.convert(entity);
   }
 
   @Override
-  public Group update(Group group) {
+  public AuthenticationGroup update(AuthenticationGroup group) {
     validationFacade.validate(group);
-    GroupEntity entity = persistenceManager.save(mapper.convert(group));
+    GroupEntity entity = persistenceManager.save(groupMapper.convert(group));
 
-    return mapper.convert(entity);
+    return groupMapper.convert(entity);
   }
 
   @Override

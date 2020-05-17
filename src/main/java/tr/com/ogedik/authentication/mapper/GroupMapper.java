@@ -6,57 +6,40 @@ package tr.com.ogedik.authentication.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.stereotype.Service;
+import org.mapstruct.Mapper;
 
 import tr.com.ogedik.authentication.entity.GroupEntity;
-import tr.com.ogedik.commons.models.Group;
-import tr.com.ogedik.commons.constants.Permission;
+import tr.com.ogedik.authentication.model.AuthenticationGroup;
 
 /**
  * @author orkun.gedik
  */
-@Service
-public class GroupMapper extends AuthenticationMapper<GroupEntity, Group> {
+@Mapper(componentModel = "spring")
+public abstract class GroupMapper {
 
   /**
-   * Maps from {@link GroupEntity} to {@link Group}
+   * Maps from {@link GroupEntity} to {@link AuthenticationGroup}
    *
    * @param entity {@link GroupEntity}
-   * @return {@link Group}
+   * @return {@link AuthenticationGroup}
    */
-  @Override
-  public Group convert(GroupEntity entity) {
-    return Group.builder()
-        .resourceId(entity.getResourceId())
-        .description(entity.getDescription())
-        .metaInformation(getMetaInformation(entity))
-        .name(entity.getName())
-        .permissions(entity.getPermissions())
-        .build();
-  }
+  public abstract AuthenticationGroup convert(GroupEntity entity);
 
   /**
-   * Maps from {@link Group} to {@link GroupEntity}
+   * Maps from {@link AuthenticationGroup} to {@link GroupEntity}
    *
-   * @param bo {@link Group}
+   * @param bo {@link AuthenticationGroup}
    * @return {@link GroupEntity}
    */
-  @Override
-  public GroupEntity convert(Group bo) {
-    GroupEntity entity = new GroupEntity();
-    entity.setResourceId(bo.getResourceId());
-    entity.setDescription(bo.getDescription());
-    entity.setName(bo.getName());
-    entity.setPermissions(bo.getPermissions());
+  public abstract GroupEntity convert(AuthenticationGroup bo);
 
-    if (bo.getMetaInformation() != null) {
-      entity.setCreatedAt(bo.getMetaInformation().getCreatedAt());
-      entity.setCreatedBy(bo.getMetaInformation().getCreatedBy());
-      entity.setUpdatedAt(bo.getMetaInformation().getUpdatedAt());
-      entity.setUpdateBy(bo.getMetaInformation().getUpdatedBy());
-    }
-
-    return entity;
+  /**
+   * Maps from List<{@link GroupEntity}> to List<{@link AuthenticationGroup}>
+   *
+   * @param entities List<{@link GroupEntity}>
+   * @return {@link List<AuthenticationGroup}>
+   */
+  public List<AuthenticationGroup> convert(List<GroupEntity> entities) {
+    return entities.stream().map(entity -> convert(entity)).collect(Collectors.toList());
   }
-
 }

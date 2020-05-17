@@ -30,7 +30,6 @@ import tr.com.ogedik.authentication.service.impl.RequestFilter;
  * 
  * @author orkun.gedik
  */
-@ComponentScan("tr.com.ogedik.commons.validation")
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)

@@ -3,6 +3,7 @@
  */
 package tr.com.ogedik.authentication.entity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -10,6 +11,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -30,7 +34,12 @@ import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 @NoArgsConstructor
 @Getter
 @Setter
-public class UserEntity extends AbstractEntity {
+public class UserEntity implements Serializable {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = AuthenticationConstants.COLS.RESOURCE_ID, updatable = false, nullable = false)
+  protected Long resourceId;
 
   @Column(name = AuthenticationConstants.COLS.USERNAME)
   private String username;
@@ -50,6 +59,19 @@ public class UserEntity extends AbstractEntity {
 
   @Column(name = AuthenticationConstants.COLS.LAST_LOGON_DATE)
   private LocalDateTime lastLogonDate;
+
+  @Column(name = AuthenticationConstants.COLS.CREATED_AT)
+  private LocalDateTime createdAt;
+
+  @Column(name = AuthenticationConstants.COLS.CREATED_BY)
+  private String createdBy;
+
+  @Column(name = AuthenticationConstants.COLS.UPDATED_AT)
+  private LocalDateTime updatedAt;
+
+  @Column(name = AuthenticationConstants.COLS.UPDATED_BY)
+  private String updatedBy;
+
 
   @Override
   public boolean equals(Object o) {

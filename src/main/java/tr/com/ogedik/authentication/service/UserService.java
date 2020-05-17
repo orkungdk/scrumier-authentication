@@ -2,7 +2,7 @@ package tr.com.ogedik.authentication.service;
 
 import java.util.List;
 
-import tr.com.ogedik.commons.models.User;
+import tr.com.ogedik.authentication.model.AuthenticationUser;
 
 /**
  * @author orkun.gedik
@@ -21,32 +21,32 @@ public interface UserService {
    * Returns user by given username
    *
    * @param username value to retrieve user from database
-   * @return found {@link User}
+   * @return found {@link AuthenticationUser}
    */
-  User getUserByUsername(String username);
+  AuthenticationUser getUserByUsername(String username);
 
   /**
    * Returns all users
    *
-   * @return List of {@link User}
+   * @return List of {@link AuthenticationUser}
    */
-  List<User> getAllUsers();
+  List<AuthenticationUser> getAllUsers();
 
   /**
    * Registers a new user
    *
-   * @param requestUser {@link User}
-   * @return {@link User}
+   * @param requestUser {@link AuthenticationUser}
+   * @return {@link AuthenticationUser}
    */
-  User create(User requestUser);
+  AuthenticationUser create(AuthenticationUser requestUser);
 
   /**
    * Updates the given user
    *
-   * @param requestUser {@link User}
-   * @return {@link User}
+   * @param requestUser {@link AuthenticationUser}
+   * @return {@link AuthenticationUser}
    */
-  User update(User requestUser);
+  AuthenticationUser update(AuthenticationUser requestUser);
 
   /**
    * Removes the given user

@@ -3,22 +3,22 @@
  */
 package tr.com.ogedik.authentication.service;
 
-import tr.com.ogedik.commons.models.Group;
-
 import java.util.List;
+
+import tr.com.ogedik.authentication.model.AuthenticationGroup;
 
 /**
  * @author orkun.gedik
  */
 public interface GroupService {
 
-  List<Group> getGroups();
+  List<AuthenticationGroup> getGroups();
 
-  Group getGroupById(Long id);
+  AuthenticationGroup getGroupById(Long id);
 
-  Group create(Group group);
+  AuthenticationGroup create(AuthenticationGroup group);
 
-  Group update(Group group);
+  AuthenticationGroup update(AuthenticationGroup group);
 
   void delete(Long id);
 }

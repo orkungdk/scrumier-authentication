@@ -15,11 +15,11 @@ import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.authentication.entity.UserEntity;
 import tr.com.ogedik.authentication.exception.AuthenticationException;
 import tr.com.ogedik.authentication.mapper.UserMapper;
+import tr.com.ogedik.authentication.model.AuthenticationUser;
 import tr.com.ogedik.authentication.persistance.manager.UserPersistenceManager;
 import tr.com.ogedik.authentication.service.UserService;
+import tr.com.ogedik.authentication.util.ResourceIdGenerator;
 import tr.com.ogedik.authentication.validation.user.UserValidationFacade;
-import tr.com.ogedik.commons.models.User;
-import tr.com.ogedik.commons.utils.ResourceIdGenerator;
 
 /**
  * @author orkun.gedik
@@ -32,11 +32,11 @@ public class UserServiceImpl implements UserService {
   @Autowired
   private UserValidationFacade validationFacade;
   @Autowired
-  private UserMapper mapper;
+  private UserMapper userMapper;
 
   @Override
-  public List<User> getAllUsers() {
-    return mapper.convertToBoList(persistenceManager.findAll());
+  public List<AuthenticationUser> getAllUsers() {
+    return userMapper.convert(persistenceManager.findAll());
   }
 
   @Override
@@ -45,33 +45,33 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User getUserByUsername(String username) {
+  public AuthenticationUser getUserByUsername(String username) {
     UserEntity entity = persistenceManager.findByUsername(username);
-    return ObjectUtils.isEmpty(entity) ? null : mapper.convert(entity);
+    return ObjectUtils.isEmpty(entity) ? null : userMapper.convert(entity);
   }
 
   @Override
-  public User create(User user) {
+  public AuthenticationUser create(AuthenticationUser user) {
     user.setResourceId(ResourceIdGenerator.generate());
     validationFacade.validateCreate(user);
     user.setEnrolmentDate(LocalDateTime.now());
 
-    UserEntity savedEntity = persistenceManager.save(mapper.convert(user));
+    UserEntity savedEntity = persistenceManager.save(userMapper.convert(user));
 
-    return mapper.convert(savedEntity);
+    return userMapper.convert(savedEntity);
   }
 
   @Override
-  public User update(User user) {
+  public AuthenticationUser update(AuthenticationUser user) {
     validationFacade.validateUpdate(user);
 
     UserEntity foundUser = persistenceManager.findByUsername(user.getUsername());
     user.setResourceId(foundUser.getResourceId());
-    UserEntity userToBeUpdated = mapper.convert(user);
+    UserEntity userToBeUpdated = userMapper.convert(user);
 
     UserEntity updatedEntity = persistenceManager.update(userToBeUpdated);
 
-    return mapper.convert(updatedEntity);
+    return userMapper.convert(updatedEntity);
   }
 
   @Override

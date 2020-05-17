@@ -8,15 +8,15 @@ import org.springframework.stereotype.Component;
 
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.authentication.exception.AuthenticationException;
+import tr.com.ogedik.authentication.model.AuthenticationUser;
 import tr.com.ogedik.authentication.service.UserService;
-import tr.com.ogedik.commons.models.User;
-import tr.com.ogedik.commons.validation.Validator;
+import tr.com.ogedik.authentication.validation.Validator;
 
 /**
  * @author orkun.gedik
  */
 @Component
-public class UserCreationValidator<T extends User> implements Validator<T> {
+public class UserCreationValidator<T extends AuthenticationUser> implements Validator<T> {
 
   @Autowired
   private UserService userService;

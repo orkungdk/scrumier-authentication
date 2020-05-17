@@ -8,13 +8,12 @@ import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.security.core.GrantedAuthority;
 
 import lombok.experimental.UtilityClass;
-import org.springframework.security.core.GrantedAuthority;
+import tr.com.ogedik.authentication.constants.Permission;
+import tr.com.ogedik.authentication.model.AuthenticationGroup;
 import tr.com.ogedik.authentication.model.UserGrantedAuthority;
-import tr.com.ogedik.commons.constants.Permission;
-import tr.com.ogedik.commons.models.Group;
-import tr.com.ogedik.commons.utils.ListUtils;
 
 /**
  * @author orkun.gedik
@@ -26,10 +25,10 @@ public class AuthenticationUtil {
     /**
      * Returns an list of {@link GrantedAuthority} by given groups
      *
-     * @param groups {@link List}<{@link Group}>
+     * @param groups {@link List}<{@link tr.com.ogedik.authentication.model.AuthenticationGroup}>
      * @return {@link List}<{@link UserGrantedAuthority}>
      */
-  public static List<UserGrantedAuthority> getAuthorities(List<Group> groups) {
+  public static List<UserGrantedAuthority> getAuthorities(List<AuthenticationGroup> groups) {
     try {
       List<Permission> permissions = (List<Permission>)ListUtils.mergeNested(groups, "permissions");
       logger.info("Retrieved permission list: {}", permissions);

@@ -3,31 +3,18 @@
  */
 package tr.com.ogedik.authentication.validation.group;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import tr.com.ogedik.commons.models.Group;
-import tr.com.ogedik.commons.models.User;
-import tr.com.ogedik.commons.validation.MandatoryFieldValidator;
-import tr.com.ogedik.commons.validation.ValidationFacade;
-import tr.com.ogedik.authentication.validation.user.UserCreationValidator;
 
-import java.util.Arrays;
+import tr.com.ogedik.authentication.model.AuthenticationGroup;
+import tr.com.ogedik.authentication.validation.ValidationFacade;
 
 /**
  * @author orkun.gedik
  */
 @Component
-public class GroupValidationFacade extends ValidationFacade {
+public class GroupValidationFacade extends ValidationFacade<AuthenticationGroup> {
 
-  @Autowired
-  private MandatoryFieldValidator mandatoryFieldValidator;
-
-  /**
-   * Validates {@link UserCreationValidator} and {@link MandatoryFieldValidator}
-   *
-   * @param group the object of {@link User}
-   */
-  public void validate(Group group) {
-    super.validate(group, Arrays.asList(mandatoryFieldValidator));
+  public void validate(AuthenticationGroup group) {
+    // TODO
   }
 }

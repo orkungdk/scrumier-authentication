@@ -6,7 +6,7 @@ package tr.com.ogedik.authentication.model;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import tr.com.ogedik.commons.models.BusinessObject;
+import org.springframework.security.core.Authentication;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-public class Authentication implements org.springframework.security.core.Authentication, BusinessObject {
+public class AuthenticationDetails implements Authentication {
 
   @NotNull
   private String principal;

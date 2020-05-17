@@ -23,7 +23,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import io.jsonwebtoken.ExpiredJwtException;
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.authentication.exception.AuthenticationException;
-import tr.com.ogedik.authentication.model.Authentication;
+import tr.com.ogedik.authentication.model.AuthenticationDetails;
 import tr.com.ogedik.authentication.service.UserDetailsService;
 import tr.com.ogedik.authentication.util.AuthenticationTokenHelper;
 
@@ -45,14 +45,14 @@ public class RequestFilter extends OncePerRequestFilter {
       throws ServletException, IOException {
     logger.info("Request session ({}) is being filtering...", request.getRequestedSessionId());
     String requestTokenHeader = request.getHeader(AuthenticationConstants.Header.AUTH_TOKEN);
-    Authentication authentication = createAuthenticatedUser(requestTokenHeader);
+    AuthenticationDetails authenticationDetails = createAuthenticatedUser(requestTokenHeader);
 
     // Once we get the token validate it.
-    if (authentication.getPrincipal() != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-      UserDetails userDetails = this.userDetailsService.loadUserByUsername(authentication.getPrincipal());
+    if (authenticationDetails.getPrincipal() != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+      UserDetails userDetails = this.userDetailsService.loadUserByUsername(authenticationDetails.getPrincipal());
 
       // if token is valid configure Spring Security to manually set authentication
-      if (authenticationTokenHelper.validateToken(authentication.getToken(), userDetails)) {
+      if (authenticationTokenHelper.validateToken(authenticationDetails.getToken(), userDetails)) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
             new UsernamePasswordAuthenticationToken( userDetails, null, userDetails.getAuthorities());
         usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -70,14 +70,14 @@ public class RequestFilter extends OncePerRequestFilter {
      * Returns an user with parsing token from request header.
      *
      * @param requestTokenHeader request header to parse token
-     * @return {@link Authentication}
+     * @return {@link AuthenticationDetails}
      * @throws AuthenticationException if the token cannot be parsed or the token has expired
      */
-  private Authentication createAuthenticatedUser(String requestTokenHeader) {
+  private AuthenticationDetails createAuthenticatedUser(String requestTokenHeader) {
     // Return an empty user if request header is empty or does not contain token.
     if (requestTokenHeader == null || !requestTokenHeader.startsWith("Bearer ")) {
       logger.warn("Token does not begin with Bearer String");
-      return Authentication.builder().build();
+      return AuthenticationDetails.builder().build();
     }
 
     try {
@@ -86,7 +86,7 @@ public class RequestFilter extends OncePerRequestFilter {
       String username = authenticationTokenHelper.getUsernameFromToken(token);
       logger.info("User has been found. Username is {}", username);
 
-      return Authentication.builder().principal(username).token(token).build();
+      return AuthenticationDetails.builder().principal(username).token(token).build();
     } catch (IllegalArgumentException e) {
       throw new AuthenticationException(AuthenticationConstants.Exception.UNABLE_GET_TOKEN);
     } catch (ExpiredJwtException e) {

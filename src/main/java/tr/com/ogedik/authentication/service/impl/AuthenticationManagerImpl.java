@@ -13,10 +13,10 @@ import org.thymeleaf.util.StringUtils;
 
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.authentication.controller.AuthenticationController;
-import tr.com.ogedik.authentication.model.Authentication;
+import tr.com.ogedik.authentication.model.AuthenticationDetails;
+import tr.com.ogedik.authentication.model.AuthenticationUser;
 import tr.com.ogedik.authentication.service.UserService;
 import tr.com.ogedik.authentication.util.AuthenticationUtil;
-import tr.com.ogedik.commons.models.User;
 
 /**
  * @author orkun.gedik
@@ -31,11 +31,11 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
   private UserService userService;
 
   @Override
-  public Authentication authenticate(org.springframework.security.core.Authentication authentication)
+  public AuthenticationDetails authenticate(org.springframework.security.core.Authentication authentication)
       throws AuthenticationException {
 
     // Retrieve user from database
-    User user = userService.getUserByUsername(authentication.getPrincipal().toString());
+    AuthenticationUser user = userService.getUserByUsername(authentication.getPrincipal().toString());
     // ToDo: Retrieve user from cache
 
     if (user == null) {
@@ -46,8 +46,8 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
     }
     logger.info("Username and password validations are OK. Authentication is being initialized.");
 
-    return Authentication.builder()
-        .authorities(AuthenticationUtil.getAuthorities(user.getGroups()))
+    return AuthenticationDetails.builder()
+        .authorities(AuthenticationUtil.getAuthorities(user.getAuthenticationGroups()))
         .principal(user.getUsername())
         .credentials(user.getPassword())
         .isAuthenticated(true)

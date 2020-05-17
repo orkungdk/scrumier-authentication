@@ -8,14 +8,14 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
 import org.springframework.stereotype.Service;
+
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.authentication.exception.AuthenticationException;
-import tr.com.ogedik.authentication.util.AuthenticationUtil;
-import tr.com.ogedik.commons.models.User;
+import tr.com.ogedik.authentication.model.AuthenticationUser;
 import tr.com.ogedik.authentication.service.UserDetailsService;
 import tr.com.ogedik.authentication.service.UserService;
+import tr.com.ogedik.authentication.util.AuthenticationUtil;
 
 /**
  * @author orkun.gedik
@@ -29,7 +29,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    User user = userService.getUserByUsername(username);
+    AuthenticationUser user = userService.getUserByUsername(username);
 
     if (user == null) {
       logger.warn("ApplicationUser cannot be found in database. Username is {}", username);
@@ -39,7 +39,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     return org.springframework.security.core.userdetails.User.builder()
         .username(user.getUsername())
         .password(user.getPassword())
-        .authorities(AuthenticationUtil.getAuthorities(user.getGroups()))
+        .authorities(AuthenticationUtil.getAuthorities(user.getAuthenticationGroups()))
         .build();
   }
 }

@@ -11,10 +11,23 @@ import org.apache.logging.log4j.Logger;
  */
 public class AuthenticationException extends RuntimeException {
 
-    private static final Logger logger = LogManager.getLogger(AuthenticationException.class);
+  public AuthenticationException(String message, String detail) {
+    super(getError(message, detail));
+  }
 
-    public AuthenticationException(String message) {
-        super(message);
-        logger.warn("An error has been thrown with the following meessage: {}", message);
-    }
+  public AuthenticationException(String message) {
+    super(message);
+  }
+
+  public AuthenticationException(Throwable e) {
+    super(e);
+  }
+
+  public AuthenticationException(String message, Throwable e) {
+    super(getError(message, e.getMessage()));
+  }
+
+  private static String getError(String message, String detail) {
+    return String.format("Message: %s \n Details: %s", message, detail);
+  }
 }

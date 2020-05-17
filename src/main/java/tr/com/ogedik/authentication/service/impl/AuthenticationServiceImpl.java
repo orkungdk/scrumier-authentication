@@ -13,12 +13,11 @@ import org.springframework.stereotype.Service;
 
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.authentication.exception.AuthenticationException;
-import tr.com.ogedik.authentication.model.Authentication;
-import tr.com.ogedik.authentication.request.AuthenticationRequest;
+import tr.com.ogedik.authentication.model.AuthenticationDetails;
+import tr.com.ogedik.authentication.model.AuthenticationRequest;
 import tr.com.ogedik.authentication.service.AuthenticationService;
 import tr.com.ogedik.authentication.service.UserDetailsService;
 import tr.com.ogedik.authentication.util.AuthenticationTokenHelper;
-import tr.com.ogedik.authentication.validation.AuthenticationValidationFacade;
 
 /**
  * @author orkun.gedik
@@ -28,8 +27,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
   @Autowired
   private AuthenticationManager authenticationManager;
-  @Autowired
-  private AuthenticationValidationFacade authenticationValidationFacade;
   @Autowired
   private AuthenticationTokenHelper authenticationTokenHelper;
   @Autowired
@@ -42,17 +39,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
    * @return generated token
    * @throws AuthenticationException if user is not exist / disabled or the credentials are incorrect
    */
-  public Authentication authenticate(AuthenticationRequest authenticationRequest) {
-    // Validates authentication request
-    authenticationValidationFacade.validate(authenticationRequest);
+  public AuthenticationDetails authenticate(AuthenticationRequest authenticationRequest) {
 
     try {
-      Authentication authentication = (Authentication)authenticationManager
+      AuthenticationDetails authenticationDetails = (AuthenticationDetails)authenticationManager
           .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
               authenticationRequest.getPassword()));
-      authentication.setToken( generateToken(authenticationRequest, authentication) );
+      authenticationDetails.setToken(generateToken(authenticationRequest, authenticationDetails));
 
-      return authentication;
+      return authenticationDetails;
     } catch (DisabledException e) {
       throw new AuthenticationException(AuthenticationConstants.Exception.USER_DISABLED);
     } catch (BadCredentialsException e) {
@@ -60,8 +55,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
   }
 
-  private String generateToken(AuthenticationRequest authenticationRequest, Authentication authentication) {
-    if (authentication.isAuthenticated()) {
+  /**
+   * Generates authentication token
+   *
+   * @param authenticationRequest the object of {@link AuthenticationRequest}
+   * @param authenticationDetails the object of {@link AuthenticationDetails}
+   * @return generated authentication token
+   */
+  private String generateToken(AuthenticationRequest authenticationRequest,
+      AuthenticationDetails authenticationDetails) {
+    if (authenticationDetails.isAuthenticated()) {
       final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 
       return authenticationTokenHelper.generateToken(userDetails);

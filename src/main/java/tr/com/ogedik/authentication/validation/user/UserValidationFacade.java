@@ -3,43 +3,41 @@
  */
 package tr.com.ogedik.authentication.validation.user;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import tr.com.ogedik.commons.models.User;
-import tr.com.ogedik.commons.validation.MandatoryFieldValidator;
-import tr.com.ogedik.commons.validation.ValidationFacade;
 
-import java.util.Arrays;
+import tr.com.ogedik.authentication.model.AuthenticationUser;
+import tr.com.ogedik.authentication.validation.ValidationFacade;
 
 /**
  * @author orkun.gedik
  */
 @Component
-public class UserValidationFacade extends ValidationFacade {
+public class UserValidationFacade extends ValidationFacade<AuthenticationUser> {
 
   @Autowired
   private UserCreationValidator userCreationValidator;
   @Autowired
   private UserUpdateValidator userUpdateValidator;
-  @Autowired
-  private MandatoryFieldValidator mandatoryFieldValidator;
 
   /**
-   * Validates {@link UserCreationValidator} and {@link MandatoryFieldValidator}
+   * Validates {@link UserCreationValidator}
    * 
-   * @param user the object of {@link User}
+   * @param authenticationUser the object of {@link AuthenticationUser}
    */
-  public void validateCreate(User user) {
-    super.validate(user, Arrays.asList(userCreationValidator, mandatoryFieldValidator));
+  public void validateCreate(AuthenticationUser authenticationUser) {
+    super.validate(authenticationUser, Arrays.asList(userCreationValidator));
   }
 
   /**
-   * Validates {@link UserUpdateValidator} and {@link MandatoryFieldValidator}
+   * Validates {@link UserUpdateValidator}
    *
-   * @param user the object of {@link User}
+   * @param authenticationUser the object of {@link AuthenticationUser}
    */
-  public void validateUpdate(User user) {
-    super.validate(user, Arrays.asList(userUpdateValidator, mandatoryFieldValidator));
+  public void validateUpdate(AuthenticationUser authenticationUser) {
+    super.validate(authenticationUser, Arrays.asList(userUpdateValidator));
   }
 
 }

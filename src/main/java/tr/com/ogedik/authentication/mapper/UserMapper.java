@@ -3,74 +3,45 @@
  */
 package tr.com.ogedik.authentication.mapper;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.mapstruct.Mapper;
 
 import tr.com.ogedik.authentication.entity.UserEntity;
-import tr.com.ogedik.commons.models.User;
+import tr.com.ogedik.authentication.model.AuthenticationUser;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- * Mapper class for {@link UserEntity} and {@link tr.com.ogedik.commons.models.User}
+ * Mapper class for {@link UserEntity} and {@link AuthenticationUser}
  * 
  * @author orkun.gedik
  */
-@Service
-public class UserMapper extends AuthenticationMapper<UserEntity, User> {
-
-  @Autowired
-  private GroupMapper groupMapper;
+@Mapper(componentModel = "spring", uses = { GroupMapper.class })
+public abstract class UserMapper {
 
   /**
-   * Maps from {@link UserEntity} to {@link User}
+   * Maps from {@link UserEntity} to {@link AuthenticationUser}
    * 
    * @param entity {@link UserEntity}
-   * @return {@link User}
+   * @return {@link AuthenticationUser}
    */
-  @Override
-  public User convert(UserEntity entity) {
-    if (entity == null) {
-      return null;
-    }
-    return User.builder()
-        .resourceId(entity.getResourceId())
-        .username(entity.getUsername())
-        .enrolmentDate(entity.getEnrolmentDate())
-        .groups(groupMapper.convertToBoList(entity.getGroups()))
-        .lastLogonDate(entity.getLastLogonDate())
-        .metaInformation(getMetaInformation(entity))
-        .password(entity.getPassword())
-        .team(entity.getTeam())
-        .build();
-  }
+  public abstract AuthenticationUser convert(UserEntity entity);
 
   /**
-   * Maps from {@link User} to {@link UserEntity}
+   * Maps from {@link AuthenticationUser} to {@link UserEntity}
    *
-   * @param bo {@link User}
+   * @param user {@link AuthenticationUser}
    * @return {@link UserEntity}
    */
-  @Override
-  public UserEntity convert(User bo) {
-    if (bo == null) {
-      return null;
-    }
-    UserEntity entity = new UserEntity();
-    entity.setResourceId(bo.getResourceId());
-    entity.setTeam(bo.getTeam());
-    entity.setEnrolmentDate(bo.getEnrolmentDate());
-    entity.setGroups(groupMapper.convertToEntityList(bo.getGroups()));
-    entity.setLastLogonDate(bo.getLastLogonDate());
-    entity.setEnrolmentDate(bo.getEnrolmentDate());
-    entity.setUsername(bo.getUsername());
-    entity.setPassword(bo.getPassword());
+  public abstract UserEntity convert(AuthenticationUser user);
 
-    if (bo.getMetaInformation() != null) {
-      entity.setUpdatedAt(bo.getMetaInformation().getUpdatedAt());
-      entity.setUpdateBy(bo.getMetaInformation().getUpdatedBy());
-      entity.setCreatedAt(bo.getMetaInformation().getCreatedAt());
-      entity.setCreatedBy(bo.getMetaInformation().getCreatedBy());
-    }
-
-    return entity;
+  /**
+   * Maps from List<{@link UserEntity}> to List<{@link AuthenticationUser}>
+   *
+   * @param entities List<{@link UserEntity}>
+   * @return {@link List<AuthenticationUser}>
+   */
+  public List<AuthenticationUser> convert(List<UserEntity> entities) {
+    return entities.stream().map(entity -> convert(entity)).collect(Collectors.toList());
   }
 }
