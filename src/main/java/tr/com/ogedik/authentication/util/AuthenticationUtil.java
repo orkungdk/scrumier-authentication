@@ -3,6 +3,7 @@
  */
 package tr.com.ogedik.authentication.util;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,7 +13,10 @@ import org.springframework.security.core.GrantedAuthority;
 
 import lombok.experimental.UtilityClass;
 import tr.com.ogedik.authentication.constants.Permission;
+import tr.com.ogedik.authentication.exception.AuthenticationException;
+import tr.com.ogedik.authentication.model.AbstractAuthenticationModel;
 import tr.com.ogedik.authentication.model.AuthenticationGroup;
+import tr.com.ogedik.authentication.model.MetaInformation;
 import tr.com.ogedik.authentication.model.UserGrantedAuthority;
 
 /**
@@ -36,6 +40,30 @@ public class AuthenticationUtil {
     } catch (IllegalAccessException e) {
       logger.warn("Cannot parse user permissions. Authentication will be provided without authorities");
       return null;
+    }
+  }
+
+  /**
+   * Fills meta information of the given authentication model
+   *
+   * @param model to be filled {@link AbstractAuthenticationModel}
+   * @param loggedInUser request owner
+   */
+  public static void fillMeta(AbstractAuthenticationModel model, String loggedInUser) {
+    if (model == null) {
+      throw new AuthenticationException("Request Body must not be null.");
+    }
+
+    if (model.getMetaInformation() == null) {
+      model.setMetaInformation(new MetaInformation());
+    }
+
+    if (model.getMetaInformation().getCreatedAt() == null) {
+      model.getMetaInformation().setCreatedAt(LocalDateTime.now());
+      model.getMetaInformation().setCreatedBy(loggedInUser);
+    } else {
+      model.getMetaInformation().setUpdatedAt(LocalDateTime.now());
+      model.getMetaInformation().setUpdatedBy(loggedInUser);
     }
   }
 }

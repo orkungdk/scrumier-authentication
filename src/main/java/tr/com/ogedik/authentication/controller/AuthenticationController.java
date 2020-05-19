@@ -18,6 +18,8 @@ import tr.com.ogedik.authentication.model.AuthenticationRequest;
 import tr.com.ogedik.authentication.response.AuthenticationResponse;
 import tr.com.ogedik.authentication.service.AuthenticationService;
 
+import javax.validation.Valid;
+
 /**
  * @author orkun.gedik
  */
@@ -31,7 +33,7 @@ public class AuthenticationController {
   private AuthenticationService authenticationService;
 
   @PostMapping(AuthenticationConstants.Paths.AUTHENTICATE)
-  public AuthenticationResponse authenticate(@RequestBody AuthenticationRequest authenticationRequest) {
+  public AuthenticationResponse authenticate(@Valid @RequestBody AuthenticationRequest authenticationRequest) {
     logger.info("The request has been received to create authentication token." );
     return AuthenticationResponse.build(authenticationService.authenticate(authenticationRequest));
   }

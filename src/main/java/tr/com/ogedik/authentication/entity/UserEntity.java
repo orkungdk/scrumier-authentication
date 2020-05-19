@@ -34,7 +34,7 @@ import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 @NoArgsConstructor
 @Getter
 @Setter
-public class UserEntity implements Serializable {
+public class UserEntity implements AuthenticationEntity, Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,9 +57,6 @@ public class UserEntity implements Serializable {
   @Column(name = AuthenticationConstants.COLS.ENROLMENT_DATE)
   private LocalDateTime enrolmentDate;
 
-  @Column(name = AuthenticationConstants.COLS.LAST_LOGON_DATE)
-  private LocalDateTime lastLogonDate;
-
   @Column(name = AuthenticationConstants.COLS.CREATED_AT)
   private LocalDateTime createdAt;
 
@@ -71,7 +68,6 @@ public class UserEntity implements Serializable {
 
   @Column(name = AuthenticationConstants.COLS.UPDATED_BY)
   private String updatedBy;
-
 
   @Override
   public boolean equals(Object o) {
@@ -85,7 +81,6 @@ public class UserEntity implements Serializable {
 
     return ObjectUtils.equals(that.resourceId, this.resourceId) && ObjectUtils.equals(that.username, this.username)
         && ObjectUtils.equals(that.password, this.password) && ObjectUtils.equals(that.team, this.team)
-        && ObjectUtils.equals(that.enrolmentDate, this.enrolmentDate)
-        && ObjectUtils.equals(that.lastLogonDate, this.lastLogonDate);
+        && ObjectUtils.equals(that.enrolmentDate, this.enrolmentDate);
   }
 }

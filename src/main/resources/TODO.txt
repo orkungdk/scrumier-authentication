@@ -1,0 +1,7 @@
+
+
+   1. Foreign Key between User and Group tables
+
+   2. Password policy
+
+   3. Username Jira validation

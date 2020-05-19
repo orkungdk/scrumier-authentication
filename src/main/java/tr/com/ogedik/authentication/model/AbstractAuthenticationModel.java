@@ -15,9 +15,8 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-@SuperBuilder
 @NoArgsConstructor
-public class AbstractAuthenticationPojo implements Serializable {
+public class AbstractAuthenticationModel implements Serializable {
 
     private Long resourceId;
 

@@ -16,7 +16,6 @@ import tr.com.ogedik.authentication.mapper.GroupMapper;
 import tr.com.ogedik.authentication.model.AuthenticationGroup;
 import tr.com.ogedik.authentication.persistance.manager.GroupPersistenceManager;
 import tr.com.ogedik.authentication.service.GroupService;
-import tr.com.ogedik.authentication.util.ResourceIdGenerator;
 import tr.com.ogedik.authentication.validation.group.GroupValidationFacade;
 
 /**
@@ -33,6 +32,11 @@ public class GroupServiceImpl implements GroupService {
   private GroupMapper groupMapper;
 
   @Override
+  public boolean isExist(String groupName) {
+    return persistenceManager.existByGroupName(groupName);
+  }
+
+  @Override
   public List<AuthenticationGroup> getGroups() {
     return groupMapper.convert(persistenceManager.findAll());
   }
@@ -44,8 +48,7 @@ public class GroupServiceImpl implements GroupService {
 
   @Override
   public AuthenticationGroup create(AuthenticationGroup group) {
-    validationFacade.validate(group);
-    group.setResourceId(ResourceIdGenerator.generate());
+    validationFacade.validateCreate(group);
     GroupEntity entity = persistenceManager.save(groupMapper.convert(group));
 
     return groupMapper.convert(entity);
@@ -53,7 +56,7 @@ public class GroupServiceImpl implements GroupService {
 
   @Override
   public AuthenticationGroup update(AuthenticationGroup group) {
-    validationFacade.validate(group);
+    validationFacade.validateUpdate(group);
     GroupEntity entity = persistenceManager.save(groupMapper.convert(group));
 
     return groupMapper.convert(entity);

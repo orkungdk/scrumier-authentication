@@ -18,11 +18,11 @@ import tr.com.ogedik.authentication.constants.Permission;
  */
 @Getter
 @Setter
-@SuperBuilder
 @NoArgsConstructor
-public class AuthenticationGroup extends AbstractAuthenticationPojo {
+public class AuthenticationGroup extends AbstractAuthenticationModel {
 
-  @NotNull private String name;
+  @NotNull
+  private String name;
 
   private String description;
 

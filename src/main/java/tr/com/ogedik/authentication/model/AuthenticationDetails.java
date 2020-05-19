@@ -3,13 +3,18 @@
  */
 package tr.com.ogedik.authentication.model;
 
+import java.util.List;
+
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.core.Authentication;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.security.core.Authentication;
-
-import javax.validation.constraints.NotNull;
-import java.util.List;
 
 /**
  * @author orkun.gedik
@@ -19,28 +24,28 @@ import java.util.List;
 @Builder
 public class AuthenticationDetails implements Authentication {
 
-  @NotNull
+  @JsonIgnore
   private String principal;
 
-  @NotNull
   private String token;
 
   private List<UserGrantedAuthority> authorities;
 
+  @JsonIgnore
   private boolean isAuthenticated;
-  
+
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String credentials;
 
-  /**
-   * The following methods are created for inheritance purposes. These are not used any place in the application.
-   */
+  private AuthenticationUser details;
+
   @Override
   public Object getDetails() {
-    return null;
+    return details;
   }
 
   @Override
   public String getName() {
-    return null;
+    return principal;
   }
 }

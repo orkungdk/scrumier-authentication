@@ -3,8 +3,6 @@
  */
 package tr.com.ogedik.authentication.validation.user;
 
-import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +19,12 @@ public class UserValidationFacade extends ValidationFacade<AuthenticationUser> {
   private UserCreationValidator userCreationValidator;
   @Autowired
   private UserUpdateValidator userUpdateValidator;
+  @Autowired
+  private JiraApplicationUserValidator jiraApplicationUserValidator;
+  @Autowired
+  private UsernameValidator usernameValidator;
+  @Autowired
+  private UserPasswordValidator userPasswordValidator;
 
   /**
    * Validates {@link UserCreationValidator}
@@ -28,7 +32,8 @@ public class UserValidationFacade extends ValidationFacade<AuthenticationUser> {
    * @param authenticationUser the object of {@link AuthenticationUser}
    */
   public void validateCreate(AuthenticationUser authenticationUser) {
-    super.validate(authenticationUser, Arrays.asList(userCreationValidator));
+    super.validate(authenticationUser, userCreationValidator, jiraApplicationUserValidator, usernameValidator,
+        userPasswordValidator);
   }
 
   /**
@@ -37,7 +42,6 @@ public class UserValidationFacade extends ValidationFacade<AuthenticationUser> {
    * @param authenticationUser the object of {@link AuthenticationUser}
    */
   public void validateUpdate(AuthenticationUser authenticationUser) {
-    super.validate(authenticationUser, Arrays.asList(userUpdateValidator));
+    super.validate(authenticationUser, userUpdateValidator, usernameValidator);
   }
-
 }

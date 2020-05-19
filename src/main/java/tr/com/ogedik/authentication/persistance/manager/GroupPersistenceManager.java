@@ -41,4 +41,8 @@ public class GroupPersistenceManager {
   public boolean existsByResourceId(@NotNull Long id) {
     return repository.existsByResourceId(id);
   }
+
+    public boolean existByGroupName(String groupName) {
+    return repository.existsByName(groupName);
+    }
 }

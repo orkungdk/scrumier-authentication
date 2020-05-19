@@ -11,27 +11,25 @@ import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 /**
  * @author orkun.gedik
  */
 @Getter
 @Setter
-@SuperBuilder
 @NoArgsConstructor
-public class AuthenticationUser extends AbstractAuthenticationPojo {
+public class AuthenticationUser extends AbstractAuthenticationModel {
 
-  @NotNull private String username;
+  @NotNull
+  private String username;
 
-  @NotNull private String password;
+  private String password;
 
-  @NotNull private String team;
+  @NotNull
+  private String team;
 
-  private List<AuthenticationGroup> authenticationGroups;
+  private List<AuthenticationGroup> groups;
 
   private LocalDateTime enrolmentDate;
-
-  private LocalDateTime lastLogonDate;
 
 }

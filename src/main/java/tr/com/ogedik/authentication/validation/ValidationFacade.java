@@ -3,14 +3,14 @@
  */
 package tr.com.ogedik.authentication.validation;
 
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * @author orkun.gedik
  */
 public abstract class ValidationFacade<T> {
 
-  public void validate(T validationRequest, List<Validator<T>> validators) {
-    validators.stream().forEach(validator -> validator.validate(validationRequest));
+  public void validate(T validationRequest, Validator<T>... validators) {
+    Arrays.asList(validators).stream().forEach(validator -> validator.validate(validationRequest));
   }
 }

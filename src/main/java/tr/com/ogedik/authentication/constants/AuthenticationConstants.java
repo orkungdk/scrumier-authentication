@@ -26,7 +26,9 @@ public class AuthenticationConstants {
 
   public static class Header {
     public static final String AUTH_TOKEN = "Auth-Token";
+    public static final String LOGGED_IN_USER = "LoggedInUser";
     public static final String AUTHORITIES = "Authorities";
+      public static final String ANONYMOUS = "Anonymous";
   }
 
   public static class Paths {
@@ -34,7 +36,7 @@ public class AuthenticationConstants {
     public static final String USERS = "/users";
     public static final String GROUPS = "/groups";
     public static final String IDENTIFIER = "/{identifier}";
-      public static final String PERMISSIONS = "/permissions";
+    public static final String PERMISSIONS = "/permissions";
   }
 
   public static class Entity {

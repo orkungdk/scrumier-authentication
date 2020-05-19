@@ -34,7 +34,7 @@ import tr.com.ogedik.authentication.constants.Permission;
 @NoArgsConstructor
 @Getter
 @Setter
-public class GroupEntity implements Serializable {
+public class GroupEntity  implements AuthenticationEntity, Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,5 +63,4 @@ public class GroupEntity implements Serializable {
 
   @Column(name = AuthenticationConstants.COLS.UPDATED_BY)
   private String updatedBy;
-
 }

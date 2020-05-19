@@ -9,6 +9,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
@@ -42,9 +43,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   public AuthenticationDetails authenticate(AuthenticationRequest authenticationRequest) {
 
     try {
-      AuthenticationDetails authenticationDetails = (AuthenticationDetails)authenticationManager
-          .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
-              authenticationRequest.getPassword()));
+      UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+          authenticationRequest.getUsername(), authenticationRequest.getPassword());
+      AuthenticationDetails authenticationDetails = (AuthenticationDetails) authenticationManager
+          .authenticate(authenticationToken);
       authenticationDetails.setToken(generateToken(authenticationRequest, authenticationDetails));
 
       return authenticationDetails;

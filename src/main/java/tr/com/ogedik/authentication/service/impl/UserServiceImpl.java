@@ -18,7 +18,6 @@ import tr.com.ogedik.authentication.mapper.UserMapper;
 import tr.com.ogedik.authentication.model.AuthenticationUser;
 import tr.com.ogedik.authentication.persistance.manager.UserPersistenceManager;
 import tr.com.ogedik.authentication.service.UserService;
-import tr.com.ogedik.authentication.util.ResourceIdGenerator;
 import tr.com.ogedik.authentication.validation.user.UserValidationFacade;
 
 /**
@@ -47,12 +46,11 @@ public class UserServiceImpl implements UserService {
   @Override
   public AuthenticationUser getUserByUsername(String username) {
     UserEntity entity = persistenceManager.findByUsername(username);
-    return ObjectUtils.isEmpty(entity) ? null : userMapper.convert(entity);
+    return userMapper.convert(entity);
   }
 
   @Override
   public AuthenticationUser create(AuthenticationUser user) {
-    user.setResourceId(ResourceIdGenerator.generate());
     validationFacade.validateCreate(user);
     user.setEnrolmentDate(LocalDateTime.now());
 

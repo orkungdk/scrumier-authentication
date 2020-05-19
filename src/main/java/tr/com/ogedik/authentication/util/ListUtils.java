@@ -50,7 +50,7 @@ public class ListUtils {
   public static <T> List<?> mergeNested(final List<T> list, String path) throws IllegalAccessException {
     List<Object> singularList = new SingularList<>();
 
-    for (T object : list) {
+    for (T object : emptyIfNull(list)) {
       Field[] fields = object.getClass().getDeclaredFields();
       Field field = Arrays.stream(fields)
           .filter(o -> path.equals(o.getName()))

@@ -16,4 +16,6 @@ public interface GroupRepository extends JpaRepository<GroupEntity, Long> {
     void deleteByResourceId(Long id);
 
     Boolean existsByResourceId(Long id);
+
+    Boolean existsByName(String name);
 }

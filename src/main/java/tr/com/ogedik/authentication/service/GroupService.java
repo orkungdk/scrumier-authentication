@@ -12,6 +12,8 @@ import tr.com.ogedik.authentication.model.AuthenticationGroup;
  */
 public interface GroupService {
 
+  boolean isExist(String groupName);
+
   List<AuthenticationGroup> getGroups();
 
   AuthenticationGroup getGroupById(Long id);

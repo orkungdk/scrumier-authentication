@@ -6,10 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.util.StringUtils;
 
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.authentication.controller.AuthenticationController;
@@ -17,6 +18,8 @@ import tr.com.ogedik.authentication.model.AuthenticationDetails;
 import tr.com.ogedik.authentication.model.AuthenticationUser;
 import tr.com.ogedik.authentication.service.UserService;
 import tr.com.ogedik.authentication.util.AuthenticationUtil;
+
+import java.util.Objects;
 
 /**
  * @author orkun.gedik
@@ -29,27 +32,27 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 
   @Autowired
   private UserService userService;
-
+  @Autowired
+  private PasswordEncoder passwordEncoder;
+  
   @Override
-  public AuthenticationDetails authenticate(org.springframework.security.core.Authentication authentication)
-      throws AuthenticationException {
-
-    // Retrieve user from database
+  public AuthenticationDetails authenticate(Authentication authentication) throws AuthenticationException {
     AuthenticationUser user = userService.getUserByUsername(authentication.getPrincipal().toString());
-    // ToDo: Retrieve user from cache
 
-    if (user == null) {
+    if (Objects.isNull(user)) {
       throw new UsernameNotFoundException(AuthenticationConstants.Exception.USER_NOT_FOUND);
     }
-    if (!StringUtils.equalsIgnoreCase(user.getPassword(), authentication.getCredentials())) {
+    if (!passwordEncoder.matches(authentication.getCredentials().toString(), user.getPassword())) {
       throw new BadCredentialsException(AuthenticationConstants.Exception.AUTH_FAIL);
     }
+
     logger.info("Username and password validations are OK. Authentication is being initialized.");
 
     return AuthenticationDetails.builder()
-        .authorities(AuthenticationUtil.getAuthorities(user.getAuthenticationGroups()))
+        .authorities(AuthenticationUtil.getAuthorities(user.getGroups()))
         .principal(user.getUsername())
         .credentials(user.getPassword())
+        .details(user)
         .isAuthenticated(true)
         .build();
   }
