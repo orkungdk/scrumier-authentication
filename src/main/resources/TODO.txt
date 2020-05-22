@@ -1,7 +1,9 @@
 
 
-   1. Foreign Key between User and Group tables
+    - User and Group entity birbirleri ile bağlantıları. Group içinde de User list tutulsun
 
-   2. Password policy
+    - Foreign Key between User and Group tables
 
-   3. Username Jira validation
+    -  Password policy
+
+    - Username Jira validation
