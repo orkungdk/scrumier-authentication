@@ -47,9 +47,9 @@ public class AuthenticationUtil {
    * Fills meta information of the given authentication model
    *
    * @param model to be filled {@link AbstractAuthenticationModel}
-   * @param loggedInUser request owner
+   * @param authenticatedUsername request owner
    */
-  public static void fillMeta(AbstractAuthenticationModel model, String loggedInUser) {
+  public static void fillMeta(AbstractAuthenticationModel model, String authenticatedUsername) {
     if (model == null) {
       throw new AuthenticationException("Request Body must not be null.");
     }
@@ -60,10 +60,10 @@ public class AuthenticationUtil {
 
     if (model.getMetaInformation().getCreatedAt() == null) {
       model.getMetaInformation().setCreatedAt(LocalDateTime.now());
-      model.getMetaInformation().setCreatedBy(loggedInUser);
+      model.getMetaInformation().setCreatedBy(authenticatedUsername);
     } else {
       model.getMetaInformation().setUpdatedAt(LocalDateTime.now());
-      model.getMetaInformation().setUpdatedBy(loggedInUser);
+      model.getMetaInformation().setUpdatedBy(authenticatedUsername);
     }
   }
 }

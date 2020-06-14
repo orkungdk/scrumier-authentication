@@ -25,7 +25,7 @@ public class GroupCreateValidator <T extends AuthenticationGroup> implements Val
     @Override
     public void validate(T validationRequest) {
         if (groupService.isExist(validationRequest.getName())) {
-            throw new AuthenticationException(AuthenticationConstants.Exception.USER_EXIST);
+            throw new AuthenticationException(AuthenticationConstants.Exception.GROUP_EXIST);
         }
     }
 }

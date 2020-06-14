@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.authentication.model.AuthenticationGroup;
@@ -51,17 +50,17 @@ public class GroupController {
 
   @PostMapping
   public AuthenticationResponse createGroup(@Valid @RequestBody AuthenticationGroup authenticationGroup,
-      @RequestHeader(AuthenticationConstants.Header.LOGGED_IN_USER) String loggedInUser) {
+      @RequestHeader(AuthenticationConstants.Header.AUTH_USER) String authenticatedUsername) {
     logger.info("The request has been received to create a authenticationGroup.");
-    AuthenticationUtil.fillMeta(authenticationGroup, loggedInUser);
+    AuthenticationUtil.fillMeta(authenticationGroup, authenticatedUsername);
     return AuthenticationResponse.build(groupService.create(authenticationGroup));
   }
 
   @PutMapping
   public AuthenticationResponse updateGroup(@Valid @RequestBody AuthenticationGroup authenticationGroup,
-      @RequestHeader(AuthenticationConstants.Header.LOGGED_IN_USER) String loggedInUser) {
+      @RequestHeader(AuthenticationConstants.Header.AUTH_USER) String authenticatedUsername) {
     logger.info("The request has been received to update {} group.", authenticationGroup.getName());
-    AuthenticationUtil.fillMeta(authenticationGroup, loggedInUser);
+    AuthenticationUtil.fillMeta(authenticationGroup, authenticatedUsername);
     return AuthenticationResponse.build(groupService.update(authenticationGroup));
   }
 

@@ -5,7 +5,6 @@ package tr.com.ogedik.authentication.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,7 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import tr.com.ogedik.authentication.AuthenticationEntrance;
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.authentication.service.UserDetailsService;
-import tr.com.ogedik.authentication.service.impl.RequestFilter;
+import tr.com.ogedik.authentication.service.impl.AuthenticationRequestFilter;
 
 /**
  * This class extends the {@link WebSecurityConfigurerAdapter}. This is a convenience class that allows customization to
@@ -39,7 +38,7 @@ public class AuthenticationSecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private UserDetailsService userDetailsService;
   @Autowired
-  private RequestFilter requestFilter;
+  private AuthenticationRequestFilter authenticationRequestFilter;
 
   /**
    * Configures AuthenticationManager so that it knows from where to load user for matching credentials Use
@@ -90,6 +89,6 @@ public class AuthenticationSecurityConfig extends WebSecurityConfigurerAdapter {
         .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     // Add a filter to validate the tokens with every request
-    httpSecurity.addFilterBefore(requestFilter, UsernamePasswordAuthenticationFilter.class);
+    httpSecurity.addFilterBefore(authenticationRequestFilter, UsernamePasswordAuthenticationFilter.class);
   }
 }

@@ -24,7 +24,6 @@ import javax.validation.Valid;
  * @author orkun.gedik
  */
 @RestController
-@CrossOrigin
 public class AuthenticationController {
 
   private static final Logger logger = LogManager.getLogger(AuthenticationController.class);
@@ -36,6 +35,12 @@ public class AuthenticationController {
   public AuthenticationResponse authenticate(@Valid @RequestBody AuthenticationRequest authenticationRequest) {
     logger.info("The request has been received to create authentication token." );
     return AuthenticationResponse.build(authenticationService.authenticate(authenticationRequest));
+  }
+
+  @GetMapping(AuthenticationConstants.Paths.AUTHENTICATE)
+  public AuthenticationResponse isAuthenticated() {
+    logger.info("The request has been received to create authentication token." );
+    return AuthenticationResponse.OK();
   }
 
   @GetMapping(AuthenticationConstants.Paths.PERMISSIONS)

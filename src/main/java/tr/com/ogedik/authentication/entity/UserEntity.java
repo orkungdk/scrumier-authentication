@@ -44,6 +44,9 @@ public class UserEntity implements AuthenticationEntity, Serializable {
   @Column(name = AuthenticationConstants.COLS.USERNAME)
   private String username;
 
+  @Column(name = AuthenticationConstants.COLS.EMAIL)
+  private String email;
+
   @Column(name = AuthenticationConstants.COLS.PASSWORD)
   private String password;
 

@@ -56,19 +56,19 @@ public class UserController {
   @PostMapping
   public AuthenticationResponse createUser(
       @Valid @RequestBody AuthenticationUser authenticationUser,
-      @RequestHeader(value = AuthenticationConstants.Header.LOGGED_IN_USER,
-              defaultValue = AuthenticationConstants.Header.ANONYMOUS) String loggedInUser) {
+      @RequestHeader(value = AuthenticationConstants.Header.AUTH_USER,
+              defaultValue = AuthenticationConstants.Header.ANONYMOUS) String authenticatedUsername) {
     logger.info("The request has been received to create an user.");
-    AuthenticationUtil.fillMeta(authenticationUser, loggedInUser);
+    AuthenticationUtil.fillMeta(authenticationUser, authenticatedUsername);
 
     return AuthenticationResponse.build(userService.create(authenticationUser));
   }
 
   @PutMapping
   public AuthenticationResponse updateUser(@Valid @RequestBody AuthenticationUser authenticationUser,
-      @RequestHeader(AuthenticationConstants.Header.LOGGED_IN_USER) String loggedInUser) {
+      @RequestHeader(AuthenticationConstants.Header.AUTH_USER) String authenticatedUsername) {
     logger.info("The request has been received to update an user.");
-    AuthenticationUtil.fillMeta(authenticationUser, loggedInUser);
+    AuthenticationUtil.fillMeta(authenticationUser, authenticatedUsername);
 
     return AuthenticationResponse.build(userService.update(authenticationUser));
   }

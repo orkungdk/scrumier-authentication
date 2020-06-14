@@ -22,13 +22,14 @@ public class AuthenticationConstants {
     public static final String USER_EXIST = "User is already exist.";
 
     public static final String GROUP_NOT_FOUND = "Group record cannot be found.";
+    public static final String GROUP_EXIST = "Group is already exist.";
+
   }
 
   public static class Header {
-    public static final String AUTH_TOKEN = "Auth-Token";
-    public static final String LOGGED_IN_USER = "LoggedInUser";
-    public static final String AUTHORITIES = "Authorities";
-      public static final String ANONYMOUS = "Anonymous";
+    public static final String AUTH_TOKEN = "X-Auth-Token";
+    public static final String AUTH_USER = "X-Auth-User";
+    public static final String ANONYMOUS = "Anonymous";
   }
 
   public static class Paths {
@@ -47,6 +48,7 @@ public class AuthenticationConstants {
   public static class COLS {
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
+    public static final String EMAIL = "email" ;
     public static final String TEAM = "team";
     public static final String ENROLMENT_DATE = "enrolmentDate";
     public static final String LAST_LOGON_DATE = "lastLogonDate";

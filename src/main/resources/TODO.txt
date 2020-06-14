@@ -7,3 +7,13 @@
     -  Password policy
 
     - Username Jira validation
+
+    - Add a public confluence page to learn more about link in setup.vue
+
+
+
+
+
+   ---------- KALDIGIM YER -------------
+
+ META MAPPER CONFIG ICIN HALLET ORDA KALDIM

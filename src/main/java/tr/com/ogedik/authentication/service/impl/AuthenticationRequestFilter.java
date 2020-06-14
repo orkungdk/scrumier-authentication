@@ -31,9 +31,9 @@ import tr.com.ogedik.authentication.util.AuthenticationTokenHelper;
  * @author orkun.gedik
  */
 @Component
-public class RequestFilter extends OncePerRequestFilter {
+public class AuthenticationRequestFilter extends OncePerRequestFilter {
 
-  private static final Logger logger = LogManager.getLogger(RequestFilter.class);
+  private static final Logger logger = LogManager.getLogger(AuthenticationRequestFilter.class);
 
   @Autowired
   private UserDetailsService userDetailsService;
@@ -44,8 +44,7 @@ public class RequestFilter extends OncePerRequestFilter {
   public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
       throws ServletException, IOException {
     logger.info("Request session ({}) is being filtering...", request.getRequestedSessionId());
-    String requestTokenHeader = request.getHeader(AuthenticationConstants.Header.AUTH_TOKEN);
-    AuthenticationDetails authenticationDetails = createAuthenticatedUser(requestTokenHeader);
+    AuthenticationDetails authenticationDetails = createAuthenticatedUser(request);
 
     // Once we get the token validate it.
     if (authenticationDetails.getPrincipal() != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -69,22 +68,22 @@ public class RequestFilter extends OncePerRequestFilter {
     /**
      * Returns an user with parsing token from request header.
      *
-     * @param requestTokenHeader request header to parse token
+     * @param request {@link HttpServletRequest}
      * @return {@link AuthenticationDetails}
      * @throws AuthenticationException if the token cannot be parsed or the token has expired
      */
-  private AuthenticationDetails createAuthenticatedUser(String requestTokenHeader) {
+  private AuthenticationDetails createAuthenticatedUser(HttpServletRequest request) {
     // Return an empty user if request header is empty or does not contain token.
+    String requestTokenHeader = request.getHeader(AuthenticationConstants.Header.AUTH_TOKEN);
     if (requestTokenHeader == null || !requestTokenHeader.startsWith("Bearer ")) {
-      logger.warn("Token does not begin with Bearer String");
+      logger.warn("Token is empty or does not begin with Bearer String");
       return AuthenticationDetails.builder().build();
     }
 
     try {
       // Token is in the form "Bearer token". Remove Bearer word and get only the Token
       String token = requestTokenHeader.substring(7);
-      String username = authenticationTokenHelper.getUsernameFromToken(token);
-      logger.info("User has been found. Username is {}", username);
+      String username = request.getHeader(AuthenticationConstants.Header.AUTH_USER);
 
       return AuthenticationDetails.builder().principal(username).token(token).build();
     } catch (IllegalArgumentException e) {

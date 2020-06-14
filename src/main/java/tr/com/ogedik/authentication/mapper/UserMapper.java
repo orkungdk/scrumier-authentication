@@ -56,6 +56,9 @@ public abstract class UserMapper {
 
   @AfterMapping
   public void encodePassword(AuthenticationUser user, @MappingTarget UserEntity entity) {
+    if (user.getPassword() == null) {
+      return;
+    }
     entity.setPassword(passwordEncoder.encode(user.getPassword()));
   }
 }
