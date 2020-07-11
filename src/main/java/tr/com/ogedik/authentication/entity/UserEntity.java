@@ -24,6 +24,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
+import tr.com.ogedik.commons.entity.ResourceEntity;
 
 /**
  * @author orkun.gedik
@@ -34,12 +35,7 @@ import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 @NoArgsConstructor
 @Getter
 @Setter
-public class UserEntity implements AuthenticationEntity, Serializable {
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = AuthenticationConstants.COLS.RESOURCE_ID, updatable = false, nullable = false)
-  protected Long resourceId;
+public class UserEntity extends ResourceEntity {
 
   @Column(name = AuthenticationConstants.COLS.USERNAME)
   private String username;
@@ -60,18 +56,6 @@ public class UserEntity implements AuthenticationEntity, Serializable {
   @Column(name = AuthenticationConstants.COLS.ENROLMENT_DATE)
   private LocalDateTime enrolmentDate;
 
-  @Column(name = AuthenticationConstants.COLS.CREATED_AT)
-  private LocalDateTime createdAt;
-
-  @Column(name = AuthenticationConstants.COLS.CREATED_BY)
-  private String createdBy;
-
-  @Column(name = AuthenticationConstants.COLS.UPDATED_AT)
-  private LocalDateTime updatedAt;
-
-  @Column(name = AuthenticationConstants.COLS.UPDATED_BY)
-  private String updatedBy;
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -82,8 +66,8 @@ public class UserEntity implements AuthenticationEntity, Serializable {
     }
     UserEntity that = (UserEntity)o;
 
-    return ObjectUtils.equals(that.resourceId, this.resourceId) && ObjectUtils.equals(that.username, this.username)
-        && ObjectUtils.equals(that.password, this.password) && ObjectUtils.equals(that.team, this.team)
-        && ObjectUtils.equals(that.enrolmentDate, this.enrolmentDate);
+    return ObjectUtils.equals(that.getResourceId(), this.getResourceId())
+        && ObjectUtils.equals(that.username, this.username) && ObjectUtils.equals(that.password, this.password)
+        && ObjectUtils.equals(that.team, this.team) && ObjectUtils.equals(that.enrolmentDate, this.enrolmentDate);
   }
 }

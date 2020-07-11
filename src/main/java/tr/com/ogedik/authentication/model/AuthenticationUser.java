@@ -6,12 +6,13 @@ package tr.com.ogedik.authentication.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import tr.com.ogedik.commons.annotation.NotNull;
+import tr.com.ogedik.commons.model.AbstractBo;
 
 /**
  * @author orkun.gedik
@@ -19,7 +20,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AuthenticationUser extends AbstractAuthenticationModel {
+public class AuthenticationUser extends AbstractBo {
+
+  private Long resourceId;
 
   @NotNull
   private String username;
@@ -30,6 +33,7 @@ public class AuthenticationUser extends AbstractAuthenticationModel {
   @NotNull
   private String team;
 
+  @NotNull
   private String email;
 
   private List<AuthenticationGroup> groups;

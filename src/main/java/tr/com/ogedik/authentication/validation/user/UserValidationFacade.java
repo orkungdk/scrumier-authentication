@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import tr.com.ogedik.authentication.model.AuthenticationUser;
-import tr.com.ogedik.authentication.validation.ValidationFacade;
+import tr.com.ogedik.commons.validator.MandatoryFieldValidator;
+import tr.com.ogedik.commons.validator.ValidationFacade;
 
 /**
  * @author orkun.gedik
@@ -32,8 +33,8 @@ public class UserValidationFacade extends ValidationFacade<AuthenticationUser> {
    * @param authenticationUser the object of {@link AuthenticationUser}
    */
   public void validateCreate(AuthenticationUser authenticationUser) {
-    super.validate(authenticationUser, userCreationValidator, jiraApplicationUserValidator, usernameValidator,
-        userPasswordValidator);
+    super.validate(authenticationUser, MandatoryFieldValidator.getInstance(), userCreationValidator,
+        jiraApplicationUserValidator, usernameValidator, userPasswordValidator);
   }
 
   /**
@@ -42,6 +43,6 @@ public class UserValidationFacade extends ValidationFacade<AuthenticationUser> {
    * @param authenticationUser the object of {@link AuthenticationUser}
    */
   public void validateUpdate(AuthenticationUser authenticationUser) {
-    super.validate(authenticationUser, userUpdateValidator, usernameValidator);
+    super.validate(authenticationUser, MandatoryFieldValidator.getInstance(), userUpdateValidator, usernameValidator);
   }
 }

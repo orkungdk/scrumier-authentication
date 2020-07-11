@@ -6,11 +6,11 @@ package tr.com.ogedik.authentication.validation.group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import tr.com.ogedik.authentication.constants.AuthenticationConstants;
+import tr.com.ogedik.authentication.exception.AuthenticationErrorType;
 import tr.com.ogedik.authentication.exception.AuthenticationException;
 import tr.com.ogedik.authentication.model.AuthenticationGroup;
 import tr.com.ogedik.authentication.service.GroupService;
-import tr.com.ogedik.authentication.validation.Validator;
+import tr.com.ogedik.commons.validator.Validator;
 
 /**
  * @author orkun.gedik
@@ -24,7 +24,7 @@ public class GroupUpdateValidator<T extends AuthenticationGroup> implements Vali
   @Override
   public void validate(T validationRequest) {
     if (!groupService.isExist(validationRequest.getName())) {
-      throw new AuthenticationException(AuthenticationConstants.Exception.GROUP_NOT_FOUND);
+      throw new AuthenticationException(AuthenticationErrorType.GROUP_NOT_FOUND, validationRequest.getName());
     }
   }
 }

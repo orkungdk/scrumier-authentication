@@ -14,6 +14,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
+import tr.com.ogedik.authentication.exception.AuthenticationErrorType;
 
 /**
  * This class will extend Spring's AuthenticationEntryPoint class and override its method to commence.
@@ -27,6 +28,6 @@ public class AuthenticationEntrance implements AuthenticationEntryPoint, Seriali
   @Override
   public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
       AuthenticationException e) throws IOException {
-    httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, AuthenticationConstants.Exception.UNAUTHORIZED);
+    httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, AuthenticationErrorType.UNAUTHORIZED.getTitle());
   }
 }

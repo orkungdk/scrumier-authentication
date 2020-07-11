@@ -22,10 +22,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
+import tr.com.ogedik.authentication.exception.AuthenticationErrorType;
 import tr.com.ogedik.authentication.exception.AuthenticationException;
 import tr.com.ogedik.authentication.model.AuthenticationDetails;
-import tr.com.ogedik.authentication.service.UserDetailsService;
-import tr.com.ogedik.authentication.util.AuthenticationTokenHelper;
+import tr.com.ogedik.authentication.service.UserService;
+import tr.com.ogedik.commons.helper.TokenHelper;
 
 /**
  * @author orkun.gedik
@@ -36,9 +37,7 @@ public class AuthenticationRequestFilter extends OncePerRequestFilter {
   private static final Logger logger = LogManager.getLogger(AuthenticationRequestFilter.class);
 
   @Autowired
-  private UserDetailsService userDetailsService;
-  @Autowired
-  private AuthenticationTokenHelper authenticationTokenHelper;
+  private UserService userService;
 
   @Override
   public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
@@ -48,10 +47,10 @@ public class AuthenticationRequestFilter extends OncePerRequestFilter {
 
     // Once we get the token validate it.
     if (authenticationDetails.getPrincipal() != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-      UserDetails userDetails = this.userDetailsService.loadUserByUsername(authenticationDetails.getPrincipal());
+      UserDetails userDetails = this.userService.loadUserByUsername(authenticationDetails.getPrincipal());
 
       // if token is valid configure Spring Security to manually set authentication
-      if (authenticationTokenHelper.validateToken(authenticationDetails.getToken(), userDetails)) {
+      if (TokenHelper.validateToken(authenticationDetails.getToken(), userDetails.getUsername())) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
             new UsernamePasswordAuthenticationToken( userDetails, null, userDetails.getAuthorities());
         usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -87,9 +86,9 @@ public class AuthenticationRequestFilter extends OncePerRequestFilter {
 
       return AuthenticationDetails.builder().principal(username).token(token).build();
     } catch (IllegalArgumentException e) {
-      throw new AuthenticationException(AuthenticationConstants.Exception.UNABLE_GET_TOKEN);
+      throw new AuthenticationException(AuthenticationErrorType.UNABLE_GET_TOKEN, "Token cannot be parsed!");
     } catch (ExpiredJwtException e) {
-      throw new AuthenticationException(AuthenticationConstants.Exception.TOKEN_EXPIRED);
+      throw new AuthenticationException(AuthenticationErrorType.TOKEN_EXPIRED, "Expired token!");
     }
   }
 }

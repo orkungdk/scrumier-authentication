@@ -21,6 +21,7 @@ import tr.com.ogedik.authentication.model.AuthenticationGroup;
 import tr.com.ogedik.authentication.response.AuthenticationResponse;
 import tr.com.ogedik.authentication.service.GroupService;
 import tr.com.ogedik.authentication.util.AuthenticationUtil;
+import tr.com.ogedik.commons.util.MetaUtils;
 
 import javax.validation.Valid;
 
@@ -52,7 +53,7 @@ public class GroupController {
   public AuthenticationResponse createGroup(@Valid @RequestBody AuthenticationGroup authenticationGroup,
       @RequestHeader(AuthenticationConstants.Header.AUTH_USER) String authenticatedUsername) {
     logger.info("The request has been received to create a authenticationGroup.");
-    AuthenticationUtil.fillMeta(authenticationGroup, authenticatedUsername);
+    MetaUtils.fillMeta(authenticationGroup, authenticatedUsername);
     return AuthenticationResponse.build(groupService.create(authenticationGroup));
   }
 
@@ -60,7 +61,7 @@ public class GroupController {
   public AuthenticationResponse updateGroup(@Valid @RequestBody AuthenticationGroup authenticationGroup,
       @RequestHeader(AuthenticationConstants.Header.AUTH_USER) String authenticatedUsername) {
     logger.info("The request has been received to update {} group.", authenticationGroup.getName());
-    AuthenticationUtil.fillMeta(authenticationGroup, authenticatedUsername);
+    MetaUtils.fillMeta(authenticationGroup, authenticatedUsername);
     return AuthenticationResponse.build(groupService.update(authenticationGroup));
   }
 

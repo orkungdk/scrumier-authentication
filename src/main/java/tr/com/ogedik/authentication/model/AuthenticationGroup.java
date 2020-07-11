@@ -5,13 +5,13 @@ package tr.com.ogedik.authentication.model;
 
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 import tr.com.ogedik.authentication.constants.Permission;
+import tr.com.ogedik.commons.annotation.NotNull;
+import tr.com.ogedik.commons.model.AbstractBo;
 
 /**
  * @author orkun.gedik
@@ -19,7 +19,9 @@ import tr.com.ogedik.authentication.constants.Permission;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AuthenticationGroup extends AbstractAuthenticationModel {
+public class AuthenticationGroup extends AbstractBo {
+
+  private Long resourceId;
 
   @NotNull
   private String name;

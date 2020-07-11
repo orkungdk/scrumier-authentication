@@ -2,12 +2,13 @@ package tr.com.ogedik.authentication.service;
 
 import java.util.List;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
 import tr.com.ogedik.authentication.model.AuthenticationUser;
 
 /**
  * @author orkun.gedik
  */
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
   /**
    * Checks whether user is exist or not

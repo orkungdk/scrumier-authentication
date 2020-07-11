@@ -21,6 +21,7 @@ import tr.com.ogedik.authentication.model.AuthenticationUser;
 import tr.com.ogedik.authentication.response.AuthenticationResponse;
 import tr.com.ogedik.authentication.service.UserService;
 import tr.com.ogedik.authentication.util.AuthenticationUtil;
+import tr.com.ogedik.commons.util.MetaUtils;
 
 import javax.validation.Valid;
 
@@ -59,7 +60,7 @@ public class UserController {
       @RequestHeader(value = AuthenticationConstants.Header.AUTH_USER,
               defaultValue = AuthenticationConstants.Header.ANONYMOUS) String authenticatedUsername) {
     logger.info("The request has been received to create an user.");
-    AuthenticationUtil.fillMeta(authenticationUser, authenticatedUsername);
+    MetaUtils.fillMeta(authenticationUser, authenticatedUsername);
 
     return AuthenticationResponse.build(userService.create(authenticationUser));
   }
@@ -68,7 +69,7 @@ public class UserController {
   public AuthenticationResponse updateUser(@Valid @RequestBody AuthenticationUser authenticationUser,
       @RequestHeader(AuthenticationConstants.Header.AUTH_USER) String authenticatedUsername) {
     logger.info("The request has been received to update an user.");
-    AuthenticationUtil.fillMeta(authenticationUser, authenticatedUsername);
+    MetaUtils.fillMeta(authenticationUser, authenticatedUsername);
 
     return AuthenticationResponse.build(userService.update(authenticationUser));
   }

@@ -5,29 +5,19 @@ package tr.com.ogedik.authentication.exception;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import tr.com.ogedik.commons.expection.ErrorException;
 
 /**
  * @author orkun.gedik
  */
-public class AuthenticationException extends RuntimeException {
-
-  public AuthenticationException(String message, String detail) {
-    super(getError(message, detail));
-  }
+public class AuthenticationException extends ErrorException {
 
   public AuthenticationException(String message) {
-    super(message);
+    super(AuthenticationErrorType.AUTH_FAIL, message);
   }
 
-  public AuthenticationException(Throwable e) {
-    super(e);
+  public AuthenticationException(AuthenticationErrorType errorType, String message) {
+    super(errorType, message);
   }
 
-  public AuthenticationException(String message, Throwable e) {
-    super(getError(message, e.getMessage()));
-  }
-
-  private static String getError(String message, String detail) {
-    return String.format("Message: %s \n Details: %s", message, detail);
-  }
 }

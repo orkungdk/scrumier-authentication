@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.authentication.entity.UserEntity;
+import tr.com.ogedik.authentication.exception.AuthenticationErrorType;
 import tr.com.ogedik.authentication.exception.AuthenticationException;
 import tr.com.ogedik.authentication.persistance.repository.UserRepository;
 
@@ -56,7 +57,7 @@ public class UserPersistenceManager {
   @CacheEvict(key = "#username")
   public void deleteByUsername(@NotNull String username) {
     if (BooleanUtils.isFalse(repository.existsByUsername(username))) {
-      throw new AuthenticationException(AuthenticationConstants.Exception.USER_NOT_FOUND);
+      throw new AuthenticationException(AuthenticationErrorType.USER_NOT_FOUND, username);
     }
 
     repository.deleteByUsername(username);

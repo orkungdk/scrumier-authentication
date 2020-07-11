@@ -3,26 +3,24 @@
  */
 package tr.com.ogedik.authentication.mapper;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
-
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import tr.com.ogedik.authentication.entity.UserEntity;
 import tr.com.ogedik.authentication.model.AuthenticationUser;
+import tr.com.ogedik.commons.mapper.AbstractBoMapper;
 
 /**
  * Mapper class for {@link UserEntity} and {@link AuthenticationUser}
  * 
  * @author orkun.gedik
  */
-@Mapper(componentModel = "spring", uses = { GroupMapper.class , MetaMapper.class })
-public abstract class UserMapper {
+@Mapper(componentModel = "spring", uses = { GroupMapper.class })
+public abstract class UserMapper extends AbstractBoMapper<AuthenticationUser, UserEntity> {
 
   @Autowired
   public PasswordEncoder passwordEncoder;
@@ -33,6 +31,7 @@ public abstract class UserMapper {
    * @param entity {@link UserEntity}
    * @return {@link AuthenticationUser}
    */
+  @Override
   public abstract AuthenticationUser convert(UserEntity entity);
 
   /**
@@ -41,18 +40,9 @@ public abstract class UserMapper {
    * @param user {@link AuthenticationUser}
    * @return {@link UserEntity}
    */
+  @Override
   @Mapping(target = "password", ignore = true)
   public abstract UserEntity convert(AuthenticationUser user);
-
-  /**
-   * Maps from List<{@link UserEntity}> to List<{@link AuthenticationUser}>
-   *
-   * @param entities List<{@link UserEntity}>
-   * @return {@link List<AuthenticationUser}>
-   */
-  public List<AuthenticationUser> convert(List<UserEntity> entities) {
-    return entities.stream().map(entity -> convert(entity)).collect(Collectors.toList());
-  }
 
   @AfterMapping
   public void encodePassword(AuthenticationUser user, @MappingTarget UserEntity entity) {

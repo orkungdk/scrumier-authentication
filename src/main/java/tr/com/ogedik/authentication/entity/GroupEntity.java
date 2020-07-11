@@ -24,6 +24,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.authentication.constants.Permission;
+import tr.com.ogedik.commons.entity.ResourceEntity;
 
 /**
  * @author orkun.gedik
@@ -34,12 +35,7 @@ import tr.com.ogedik.authentication.constants.Permission;
 @NoArgsConstructor
 @Getter
 @Setter
-public class GroupEntity  implements AuthenticationEntity, Serializable {
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = AuthenticationConstants.COLS.RESOURCE_ID, updatable = false, nullable = false)
-  protected Long resourceId;
+public class GroupEntity extends ResourceEntity {
 
   @Column(name = AuthenticationConstants.COLS.NAME)
   private String name;
@@ -51,16 +47,4 @@ public class GroupEntity  implements AuthenticationEntity, Serializable {
   @Enumerated(EnumType.STRING)
   @ElementCollection(fetch = FetchType.EAGER)
   private List<Permission> permissions;
-
-  @Column(name = AuthenticationConstants.COLS.CREATED_AT)
-  private LocalDateTime createdAt;
-
-  @Column(name = AuthenticationConstants.COLS.CREATED_BY)
-  private String createdBy;
-
-  @Column(name = AuthenticationConstants.COLS.UPDATED_AT)
-  private LocalDateTime updatedAt;
-
-  @Column(name = AuthenticationConstants.COLS.UPDATED_BY)
-  private String updatedBy;
 }

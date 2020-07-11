@@ -20,7 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import tr.com.ogedik.authentication.AuthenticationEntrance;
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
-import tr.com.ogedik.authentication.service.UserDetailsService;
+import tr.com.ogedik.authentication.service.UserService;
 import tr.com.ogedik.authentication.service.impl.AuthenticationRequestFilter;
 
 /**
@@ -36,7 +36,7 @@ public class AuthenticationSecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private AuthenticationEntrance authenticationEntrance;
   @Autowired
-  private UserDetailsService userDetailsService;
+  private UserService userService;
   @Autowired
   private AuthenticationRequestFilter authenticationRequestFilter;
 
@@ -50,7 +50,7 @@ public class AuthenticationSecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   public void configureGlobal(AuthenticationManagerBuilder authenticationManager) {
     try {
-      authenticationManager.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+      authenticationManager.userDetailsService(userService).passwordEncoder(passwordEncoder());
     } catch (Exception e) {
       e.printStackTrace();
     }

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import tr.com.ogedik.authentication.model.AuthenticationGroup;
-import tr.com.ogedik.authentication.validation.ValidationFacade;
+import tr.com.ogedik.commons.validator.ValidationFacade;
 
 /**
  * @author orkun.gedik
@@ -16,10 +16,10 @@ import tr.com.ogedik.authentication.validation.ValidationFacade;
 public class GroupValidationFacade extends ValidationFacade<AuthenticationGroup> {
 
   @Autowired
-  private GroupCreateValidator groupCreateValidator;
+  private GroupCreateValidator<AuthenticationGroup> groupCreateValidator;
 
   @Autowired
-  private GroupUpdateValidator groupUpdateValidator;
+  private GroupUpdateValidator<AuthenticationGroup> groupUpdateValidator;
 
   public void validateCreate(AuthenticationGroup authenticationGroup) {
     super.validate(authenticationGroup, groupCreateValidator);

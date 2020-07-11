@@ -10,13 +10,14 @@ import org.mapstruct.Mapper;
 
 import tr.com.ogedik.authentication.entity.GroupEntity;
 import tr.com.ogedik.authentication.model.AuthenticationGroup;
-import tr.com.ogedik.authentication.util.ListUtils;
+import tr.com.ogedik.commons.mapper.AbstractBoMapper;
+import tr.com.ogedik.commons.util.ListUtils;
 
 /**
  * @author orkun.gedik
  */
-@Mapper(componentModel = "spring", uses = { MetaMapper.class })
-public abstract class GroupMapper {
+@Mapper(componentModel = "spring")
+public abstract class GroupMapper extends AbstractBoMapper<AuthenticationGroup, GroupEntity> {
 
   /**
    * Maps from {@link GroupEntity} to {@link AuthenticationGroup}
@@ -24,6 +25,7 @@ public abstract class GroupMapper {
    * @param entity {@link GroupEntity}
    * @return {@link AuthenticationGroup}
    */
+  @Override
   public abstract AuthenticationGroup convert(GroupEntity entity);
 
   /**
@@ -32,15 +34,7 @@ public abstract class GroupMapper {
    * @param group {@link AuthenticationGroup}
    * @return {@link GroupEntity}
    */
+  @Override
   public abstract GroupEntity convert(AuthenticationGroup group);
 
-  /**
-   * Maps from List<{@link GroupEntity}> to List<{@link AuthenticationGroup}>
-   *
-   * @param entities List<{@link GroupEntity}>
-   * @return {@link List<AuthenticationGroup}>
-   */
-  public List<AuthenticationGroup> convert(List<GroupEntity> entities) {
-    return ListUtils.emptyIfNull(entities).stream().map(entity -> convert(entity)).collect(Collectors.toList());
-  }
 }

@@ -11,21 +11,6 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class AuthenticationConstants {
 
-  public static class Exception {
-    public static final String AUTH_FAIL = "Authentication failed. ";
-    public static final String USER_DISABLED = AUTH_FAIL + "User has been disabled.";
-    public static final String INVALID_CREDENTIALS = AUTH_FAIL + "Invalid credentials.";
-    public static final String UNABLE_GET_TOKEN = "Unable to get token.";
-    public static final String TOKEN_EXPIRED = "Token has expired.";
-    public static final String UNAUTHORIZED = "Unauthorized request.";
-    public static final String USER_NOT_FOUND = "User record cannot be found.";
-    public static final String USER_EXIST = "User is already exist.";
-
-    public static final String GROUP_NOT_FOUND = "Group record cannot be found.";
-    public static final String GROUP_EXIST = "Group is already exist.";
-
-  }
-
   public static class Header {
     public static final String AUTH_TOKEN = "X-Auth-Token";
     public static final String AUTH_USER = "X-Auth-User";

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.authentication.entity.GroupEntity;
+import tr.com.ogedik.authentication.exception.AuthenticationErrorType;
 import tr.com.ogedik.authentication.exception.AuthenticationException;
 import tr.com.ogedik.authentication.mapper.GroupMapper;
 import tr.com.ogedik.authentication.model.AuthenticationGroup;
@@ -65,7 +66,7 @@ public class GroupServiceImpl implements GroupService {
   @Override
   public void delete(Long id) {
     if (BooleanUtils.isFalse(persistenceManager.existsByResourceId(id))) {
-      throw new AuthenticationException(AuthenticationConstants.Exception.GROUP_NOT_FOUND);
+      throw new AuthenticationException(AuthenticationErrorType.GROUP_NOT_FOUND, "Requested group id is " + id);
 
     }
     persistenceManager.deleteByResourceId(id);
