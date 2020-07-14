@@ -22,19 +22,18 @@ import tr.com.ogedik.commons.validator.Validator;
 @Component
 public class JiraApplicationUserValidator<T extends AuthenticationUser> implements Validator<T> {
 
-  @Qualifier("eurekaClient")
-  @Autowired
-  private EurekaClient discoveryClient;
+    @Qualifier("eurekaClient")
+    @Autowired
+    private EurekaClient discoveryClient;
 
-  @Override
-  public void validate(T validationRequest) {
-    String username = validationRequest.getUsername();
-    String password = validationRequest.getPassword();
+    @Override
+    public void validate(T validationRequest) {
+        String username = validationRequest.getUsername();
+        String password = validationRequest.getPassword();
 
-    InstanceInfo instanceInfo = discoveryClient.getNextServerFromEureka(Services.INTEGRATION, false);
-    RequestURLDetails requestURLDetails = new RequestURLDetails(instanceInfo.getHomePageUrl(),
-        instanceInfo.getVIPAddress(), Services.Path.JIRA_AUTH, null);
-    HttpRestClient.doPost(requestURLDetails,
-        AuthenticationRequest.builder().username(username).password(password).build(), null);
-  }
+        InstanceInfo instanceInfo = discoveryClient.getNextServerFromEureka(Services.INTEGRATION, false);
+        RequestURLDetails requestURLDetails = new RequestURLDetails(instanceInfo.getHomePageUrl(), Services.Path.JIRA_AUTH, null);
+        HttpRestClient.doPost(requestURLDetails,
+                AuthenticationRequest.builder().username(username).password(password).build(), null);
+    }
 }
