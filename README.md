@@ -10,5 +10,5 @@ User management of this application is qutie strict forward. Each user may be a 
 Some of the user details such as avatarUrl are enriched on the run time. The data is retrieved from integrated Jira instance.
 In order to create an user, **username** and **surname** must be the same with an already exised user in the Jira.
 
-- ## Group management
+- ## Group management
 Groups in the application do not refer the groups in the Jira. More likely, a group refers the set of permission that user has. The reason of this is, in the Jira there should not be specific groups such as Scrum Masters or Product Owners. That is why the logic behind a Jira Time Tracker group and Jira group are totally different.
