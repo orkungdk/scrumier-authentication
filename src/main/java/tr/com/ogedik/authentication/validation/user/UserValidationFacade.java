@@ -1,6 +1,3 @@
-/**
- * © 2020 Copyright Amadeus Unauthorised use and disclosure strictly forbidden.
- */
 package tr.com.ogedik.authentication.validation.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +18,7 @@ public class UserValidationFacade extends ValidationFacade<AuthenticationUser> {
   @Autowired
   private UserUpdateValidator userUpdateValidator;
   @Autowired
-  private JiraApplicationUserValidator jiraApplicationUserValidator;
+  private JiraUserValidator jiraUserValidator;
   @Autowired
   private UsernameValidator usernameValidator;
   @Autowired
@@ -34,7 +31,7 @@ public class UserValidationFacade extends ValidationFacade<AuthenticationUser> {
    */
   public void validateCreate(AuthenticationUser authenticationUser) {
     super.validate(authenticationUser, MandatoryFieldValidator.getInstance(), userCreationValidator,
-        jiraApplicationUserValidator, usernameValidator, userPasswordValidator);
+            jiraUserValidator, usernameValidator, userPasswordValidator);
   }
 
   /**

@@ -1,10 +1,7 @@
-/**
- * © 2020 Copyright Amadeus Unauthorised use and disclosure strictly forbidden.
- */
 package tr.com.ogedik.authentication.service;
 
 import tr.com.ogedik.authentication.model.AuthenticationDetails;
-import tr.com.ogedik.commons.request.model.AuthenticationRequest;
+import tr.com.ogedik.commons.rest.request.model.AuthenticationRequest;
 
 /**
  * @author orkun.gedik
@@ -19,4 +16,5 @@ public interface AuthenticationService {
    */
   AuthenticationDetails authenticate(AuthenticationRequest authenticationRequest);
 
+  String validateToken(String token);
 }

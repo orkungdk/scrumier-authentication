@@ -1,6 +1,3 @@
-/**
- * © 2020 Copyright Amadeus Unauthorised use and disclosure strictly forbidden.
- */
 package tr.com.ogedik.authentication.validation.group;
 
 import org.springframework.beans.factory.annotation.Autowired;

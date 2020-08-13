@@ -1,27 +1,17 @@
-/**
- * © 2020 Copyright Amadeus Unauthorised use and disclosure strictly forbidden.
- */
 package tr.com.ogedik.authentication.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import tr.com.ogedik.authentication.constants.AuthenticationConstants;
+import org.springframework.web.bind.annotation.*;
 import tr.com.ogedik.authentication.model.AuthenticationGroup;
-import tr.com.ogedik.authentication.response.AuthenticationResponse;
 import tr.com.ogedik.authentication.service.GroupService;
-import tr.com.ogedik.authentication.util.AuthenticationUtil;
+import tr.com.ogedik.commons.constants.Headers;
+import tr.com.ogedik.commons.constants.Services;
+import tr.com.ogedik.commons.rest.response.AbstractResponse;
 import tr.com.ogedik.commons.util.MetaUtils;
+import tr.com.ogedik.commons.rest.AbstractController;
 
 import javax.validation.Valid;
 
@@ -29,48 +19,48 @@ import javax.validation.Valid;
  * @author orkun.gedik
  */
 @Controller
-@RequestMapping(AuthenticationConstants.Paths.GROUPS)
-public class GroupController {
+@RequestMapping(Services.Path.GROUPS)
+public class GroupController extends AbstractController {
 
-  private static final Logger logger = LogManager.getLogger(GroupController.class);
+    private static final Logger logger = LogManager.getLogger(GroupController.class);
 
-  @Autowired
-  GroupService groupService;
+    @Autowired
+    private GroupService groupService;
 
-  @GetMapping
-  public AuthenticationResponse getGroups() {
-    logger.info("The request has been received to return all groups.");
-    return AuthenticationResponse.build(groupService.getGroups());
-  }
+    @GetMapping
+    public AbstractResponse getGroups() {
+        logger.info("The request has been received to return all groups.");
+        return AbstractResponse.build(groupService.getGroups());
+    }
 
-  @GetMapping(AuthenticationConstants.Paths.IDENTIFIER)
-  public AuthenticationResponse getGroup(@PathVariable Long identifier) {
-    logger.info("The request has been received to return group with id {}.", identifier);
-    return AuthenticationResponse.build(groupService.getGroupById(identifier));
-  }
+    @GetMapping(Services.Path.IDENTIFIER)
+    public AbstractResponse getGroup(@PathVariable Long identifier) {
+        logger.info("The request has been received to return group with id {}.", identifier);
+        return AbstractResponse.build(groupService.getGroupById(identifier));
+    }
 
-  @PostMapping
-  public AuthenticationResponse createGroup(@Valid @RequestBody AuthenticationGroup authenticationGroup,
-      @RequestHeader(AuthenticationConstants.Header.AUTH_USER) String authenticatedUsername) {
-    logger.info("The request has been received to create a authenticationGroup.");
-    MetaUtils.fillMeta(authenticationGroup, authenticatedUsername);
-    return AuthenticationResponse.build(groupService.create(authenticationGroup));
-  }
+    @PostMapping
+    public AbstractResponse createGroup(@Valid @RequestBody AuthenticationGroup authenticationGroup,
+                                        @RequestHeader(Headers.AUTH_USER) String authenticatedUsername) {
+        logger.info("The request has been received to create a authenticationGroup.");
+        MetaUtils.fillMeta(authenticationGroup, authenticatedUsername);
+        return AbstractResponse.build(groupService.create(authenticationGroup));
+    }
 
-  @PutMapping
-  public AuthenticationResponse updateGroup(@Valid @RequestBody AuthenticationGroup authenticationGroup,
-      @RequestHeader(AuthenticationConstants.Header.AUTH_USER) String authenticatedUsername) {
-    logger.info("The request has been received to update {} group.", authenticationGroup.getName());
-    MetaUtils.fillMeta(authenticationGroup, authenticatedUsername);
-    return AuthenticationResponse.build(groupService.update(authenticationGroup));
-  }
+    @PutMapping
+    public AbstractResponse updateGroup(@Valid @RequestBody AuthenticationGroup authenticationGroup,
+                                        @RequestHeader(Headers.AUTH_USER) String authenticatedUsername) {
+        logger.info("The request has been received to update {} group.", authenticationGroup.getName());
+        MetaUtils.fillMeta(authenticationGroup, authenticatedUsername);
+        return AbstractResponse.build(groupService.update(authenticationGroup));
+    }
 
-  @DeleteMapping(AuthenticationConstants.Paths.IDENTIFIER)
-  public AuthenticationResponse deleteGroup(@PathVariable Long identifier) {
-    logger.info("The request has been received to delete group with id {}.", identifier);
-    groupService.delete(identifier);
+    @DeleteMapping(Services.Path.IDENTIFIER)
+    public AbstractResponse deleteGroup(@PathVariable Long identifier) {
+        logger.info("The request has been received to delete group with id {}.", identifier);
+        groupService.delete(identifier);
 
-    return AuthenticationResponse.OK();
-  }
+        return AbstractResponse.OK();
+    }
 
 }

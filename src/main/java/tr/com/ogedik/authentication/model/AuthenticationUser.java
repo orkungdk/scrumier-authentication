@@ -1,6 +1,3 @@
-/**
- * © 2020 Copyright Amadeus Unauthorised use and disclosure strictly forbidden.
- */
 package tr.com.ogedik.authentication.model;
 
 import java.time.LocalDateTime;
@@ -36,8 +33,12 @@ public class AuthenticationUser extends AbstractBo {
   @NotNull
   private String email;
 
+  private String avatarUrl;
+
   private List<AuthenticationGroup> groups;
 
   private LocalDateTime enrolmentDate;
+
+  private LocalDateTime lastLoginDate;
 
 }

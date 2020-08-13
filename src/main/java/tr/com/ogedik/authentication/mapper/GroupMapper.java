@@ -1,17 +1,9 @@
-/**
- * © 2020 Copyright Amadeus Unauthorised use and disclosure strictly forbidden.
- */
 package tr.com.ogedik.authentication.mapper;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.mapstruct.Mapper;
-
 import tr.com.ogedik.authentication.entity.GroupEntity;
 import tr.com.ogedik.authentication.model.AuthenticationGroup;
 import tr.com.ogedik.commons.mapper.AbstractBoMapper;
-import tr.com.ogedik.commons.util.ListUtils;
 
 /**
  * @author orkun.gedik

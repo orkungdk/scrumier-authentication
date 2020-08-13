@@ -1,6 +1,3 @@
-/**
- * © 2020 Copyright Amadeus Unauthorised use and disclosure strictly forbidden.
- */
 package tr.com.ogedik.authentication.service.impl;
 
 import java.util.List;
@@ -9,7 +6,6 @@ import org.apache.commons.lang.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.authentication.entity.GroupEntity;
 import tr.com.ogedik.authentication.exception.AuthenticationErrorType;
 import tr.com.ogedik.authentication.exception.AuthenticationException;

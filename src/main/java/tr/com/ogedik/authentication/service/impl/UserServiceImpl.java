@@ -1,10 +1,8 @@
-/**
- * © 2020 Copyright Amadeus Unauthorised use and disclosure strictly forbidden.
- */
 package tr.com.ogedik.authentication.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.logging.log4j.LogManager;
@@ -24,13 +22,20 @@ import tr.com.ogedik.authentication.persistance.manager.UserPersistenceManager;
 import tr.com.ogedik.authentication.service.UserService;
 import tr.com.ogedik.authentication.util.AuthenticationUtil;
 import tr.com.ogedik.authentication.validation.user.UserValidationFacade;
+import tr.com.ogedik.commons.abstraction.AbstractService;
+import tr.com.ogedik.commons.constants.Services;
+import tr.com.ogedik.commons.model.JiraUser;
+import tr.com.ogedik.commons.rest.response.RestResponse;
+import tr.com.ogedik.commons.util.MapUtils;
+import tr.com.ogedik.commons.rest.request.client.HttpRestClient;
+import tr.com.ogedik.commons.rest.request.client.helper.RequestURLDetails;
 
 /**
  * @author orkun.gedik
  */
 @Service
 @Transactional
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends AbstractService implements UserService {
 
   private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
@@ -60,12 +65,25 @@ public class UserServiceImpl implements UserService {
   @Override
   public AuthenticationUser create(AuthenticationUser user) {
     validationFacade.validateCreate(user);
-    user.setEnrolmentDate(LocalDateTime.now());
+    fulfillUser(user);
 
-    UserEntity toBeCreatedEntity = userMapper.convert(user);
+    UserEntity toBeCreatedEntity = userMapper.convertCreate(user);
     UserEntity createdEntity = persistenceManager.save(toBeCreatedEntity);
 
     return userMapper.convert(createdEntity);
+  }
+
+  private void fulfillUser(AuthenticationUser user) {
+    user.setEnrolmentDate(LocalDateTime.now());
+    user.setAvatarUrl(getAvatarUrl(user.getUsername()));
+  }
+
+  private String getAvatarUrl(String username) {
+    RequestURLDetails requestURLDetails = new RequestURLDetails(getRequestUrl(Services.INTEGRATION), Services.Path.JIRA_USER, MapUtils.of("username", username));
+    RestResponse<JiraUser> jiraUserResponse = HttpRestClient.doGet(requestURLDetails, JiraUser.class);
+    Map<String, String> avatarUrls = jiraUserResponse.getBody().getAvatarUrls();
+
+    return avatarUrls.get("48x48"); // the biggest logo size
   }
 
   @Override

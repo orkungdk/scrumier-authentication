@@ -1,5 +1,6 @@
 package tr.com.ogedik.authentication.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
@@ -44,6 +45,11 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
     }
 
     logger.info("Username and password validations are OK. Authentication is being initialized.");
+
+    // Update last login date on the moment that user has been authenticated
+    user.setLastLoginDate(LocalDateTime.now());
+    userService.update(user);
+
 
     return AuthenticationDetails.builder()
         .authorities(AuthenticationUtil.getAuthorities(user.getGroups()))

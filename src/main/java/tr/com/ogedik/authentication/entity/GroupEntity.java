@@ -1,22 +1,4 @@
-/**
- * © 2020 Copyright Amadeus Unauthorised use and disclosure strictly forbidden.
- */
 package tr.com.ogedik.authentication.entity;
-
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,6 +7,9 @@ import lombok.Setter;
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.authentication.constants.Permission;
 import tr.com.ogedik.commons.entity.ResourceEntity;
+
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * @author orkun.gedik

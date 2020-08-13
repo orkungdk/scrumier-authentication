@@ -1,9 +1,5 @@
-/**
- * © 2020 Copyright Amadeus Unauthorised use and disclosure strictly forbidden.
- */
 package tr.com.ogedik.authentication.entity;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -11,9 +7,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -55,6 +48,12 @@ public class UserEntity extends ResourceEntity {
 
   @Column(name = AuthenticationConstants.COLS.ENROLMENT_DATE)
   private LocalDateTime enrolmentDate;
+
+  @Column(name = AuthenticationConstants.COLS.AVATAR_URL)
+  private String avatarUrl;
+
+  @Column(name = AuthenticationConstants.COLS.LAST_LOGIN_DATE)
+  private LocalDateTime localDateTime;
 
   @Override
   public boolean equals(Object o) {
