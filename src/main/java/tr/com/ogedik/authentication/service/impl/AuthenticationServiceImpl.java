@@ -8,15 +8,13 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
 import tr.com.ogedik.authentication.exception.AuthenticationErrorType;
-import tr.com.ogedik.authentication.exception.AuthenticationException;
 import tr.com.ogedik.authentication.model.AuthenticationDetails;
-import tr.com.ogedik.commons.expection.ErrorException;
-import tr.com.ogedik.commons.rest.request.model.AuthenticationRequest;
 import tr.com.ogedik.authentication.service.AuthenticationService;
 import tr.com.ogedik.authentication.service.UserService;
+import tr.com.ogedik.commons.expection.ErrorException;
 import tr.com.ogedik.commons.helper.TokenHelper;
+import tr.com.ogedik.commons.rest.request.model.AuthenticationRequest;
 
 /**
  * @author orkun.gedik
@@ -34,7 +32,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
      *
      * @param authenticationRequest the object of {@link AuthenticationRequest}
      * @return {@link AuthenticationDetails} with the generated JWT token
-     * @throws AuthenticationException if user is not exist / disabled or the credentials are incorrect
+     * @throws ErrorException if user is not exist / disabled or the credentials are incorrect
      */
     public AuthenticationDetails authenticate(AuthenticationRequest authenticationRequest) {
 
@@ -47,9 +45,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
             return authenticationDetails;
         } catch (DisabledException e) {
-            throw new AuthenticationException(AuthenticationErrorType.USER_DISABLED, "User is not active!");
+            throw new ErrorException(AuthenticationErrorType.USER_DISABLED, "User is not active!");
         } catch (BadCredentialsException e) {
-            throw new AuthenticationException(AuthenticationErrorType.INVALID_CREDENTIALS, "Incorrect username or password!");
+            throw new ErrorException(AuthenticationErrorType.INVALID_CREDENTIALS, "Incorrect username or password!");
         }
     }
 
@@ -83,7 +81,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
             return TokenHelper.generateToken(userDetails.getUsername());
         } else {
-            throw new AuthenticationException(AuthenticationErrorType.AUTH_FAIL, "User cannot be authenticated.");
+            throw new ErrorException(AuthenticationErrorType.AUTH_FAIL, "User cannot be authenticated.");
         }
     }
 }

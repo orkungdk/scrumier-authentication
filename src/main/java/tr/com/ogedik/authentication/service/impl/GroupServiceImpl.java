@@ -1,19 +1,18 @@
 package tr.com.ogedik.authentication.service.impl;
 
-import java.util.List;
-
 import org.apache.commons.lang.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import tr.com.ogedik.authentication.entity.GroupEntity;
 import tr.com.ogedik.authentication.exception.AuthenticationErrorType;
-import tr.com.ogedik.authentication.exception.AuthenticationException;
 import tr.com.ogedik.authentication.mapper.GroupMapper;
 import tr.com.ogedik.authentication.model.AuthenticationGroup;
 import tr.com.ogedik.authentication.persistance.manager.GroupPersistenceManager;
 import tr.com.ogedik.authentication.service.GroupService;
 import tr.com.ogedik.authentication.validation.group.GroupValidationFacade;
+import tr.com.ogedik.commons.expection.ErrorException;
+
+import java.util.List;
 
 /**
  * @author orkun.gedik
@@ -62,7 +61,7 @@ public class GroupServiceImpl implements GroupService {
   @Override
   public void delete(Long id) {
     if (BooleanUtils.isFalse(persistenceManager.existsByResourceId(id))) {
-      throw new AuthenticationException(AuthenticationErrorType.GROUP_NOT_FOUND, "Requested group id is " + id);
+      throw new ErrorException(AuthenticationErrorType.GROUP_NOT_FOUND, "Requested group id is " + id);
 
     }
     persistenceManager.deleteByResourceId(id);

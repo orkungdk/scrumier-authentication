@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 import tr.com.ogedik.authentication.constants.Permission;
 import tr.com.ogedik.authentication.service.AuthenticationService;
 import tr.com.ogedik.commons.constants.Services;
-import tr.com.ogedik.commons.rest.response.AbstractResponse;
 import tr.com.ogedik.commons.rest.AbstractController;
 import tr.com.ogedik.commons.rest.request.model.AuthenticationRequest;
+import tr.com.ogedik.commons.rest.response.AbstractResponse;
 
 import javax.validation.Valid;
 
