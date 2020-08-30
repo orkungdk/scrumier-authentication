@@ -24,11 +24,14 @@ import tr.com.ogedik.authentication.util.AuthenticationUtil;
 import tr.com.ogedik.authentication.validation.user.UserValidationFacade;
 import tr.com.ogedik.commons.abstraction.AbstractService;
 import tr.com.ogedik.commons.constants.Services;
+import tr.com.ogedik.commons.expection.ErrorException;
 import tr.com.ogedik.commons.model.JiraUser;
 import tr.com.ogedik.commons.rest.response.RestResponse;
 import tr.com.ogedik.commons.util.MapUtils;
 import tr.com.ogedik.commons.rest.request.client.HttpRestClient;
 import tr.com.ogedik.commons.rest.request.client.helper.RequestURLDetails;
+
+import javax.persistence.NonUniqueResultException;
 
 /**
  * @author orkun.gedik
@@ -58,24 +61,27 @@ public class UserServiceImpl extends AbstractService implements UserService {
 
   @Override
   public AuthenticationUser getUserByUsername(String username) {
-    UserEntity entity = persistenceManager.findByUsername(username);
-    return userMapper.convert(entity);
+    try {
+      UserEntity entity = persistenceManager.findByUsername(username);
+      logger.info("User entity found from database for username {}.", username);
+
+      return userMapper.convert(entity);
+    } catch (NonUniqueResultException e) {
+      logger.error("User entity cannot be retrieved for username {}, error -> {}", username, e);
+      throw new ErrorException(AuthenticationErrorType.MULTIPLE_USER_FOUND, username + " has multiple user result");
+    }
   }
 
   @Override
   public AuthenticationUser create(AuthenticationUser user) {
     validationFacade.validateCreate(user);
-    fulfillUser(user);
+    user.setEnrolmentDate(LocalDateTime.now());
+    user.setAvatarUrl(getAvatarUrl(user.getUsername()));
 
     UserEntity toBeCreatedEntity = userMapper.convertCreate(user);
     UserEntity createdEntity = persistenceManager.save(toBeCreatedEntity);
 
     return userMapper.convert(createdEntity);
-  }
-
-  private void fulfillUser(AuthenticationUser user) {
-    user.setEnrolmentDate(LocalDateTime.now());
-    user.setAvatarUrl(getAvatarUrl(user.getUsername()));
   }
 
   private String getAvatarUrl(String username) {
