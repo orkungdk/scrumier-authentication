@@ -42,7 +42,7 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
                     "User not found for : " + authentication.getPrincipal().toString());
         }
         if (!passwordEncoder.matches(authentication.getCredentials().toString(), user.getPassword())) {
-            throw new ErrorException(AuthenticationErrorType.INVALID_CREDENTIALS, "Bad credentials!");
+            throw new ErrorException(AuthenticationErrorType.INVALID_CREDENTIALS);
         }
 
         logger.info("Username and password validations are OK. Authentication is being initialized.");
