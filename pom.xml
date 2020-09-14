@@ -124,6 +124,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
     <repositories>
         <repository>
             <id>ogedik.commons.snapshots</id>
@@ -134,6 +135,7 @@
             </snapshots>
         </repository>
     </repositories>
+
     <build>
         <plugins>
             <plugin>
