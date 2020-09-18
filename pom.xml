@@ -12,7 +12,7 @@
     <artifactId>authentication</artifactId>
     <version>1.0.0</version>
     <name>authentication</name>
-    <description>Authentication service for Jira Time Tracking</description>
+    <description>Authentication service for Scrumier</description>
 
     <!-- Dependency versions -->
     <properties>
