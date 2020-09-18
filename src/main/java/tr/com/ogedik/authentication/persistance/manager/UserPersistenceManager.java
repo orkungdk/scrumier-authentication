@@ -12,7 +12,6 @@ import tr.com.ogedik.authentication.exception.AuthenticationErrorType;
 import tr.com.ogedik.authentication.persistance.repository.UserRepository;
 import tr.com.ogedik.commons.expection.ErrorException;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -25,7 +24,7 @@ public class UserPersistenceManager {
   @Autowired
   private UserRepository repository;
 
-  public boolean existsByUsername(@NotNull String username) {
+  public boolean existsByUsername(String username) {
     return repository.existsByUsername(username);
   }
 
@@ -34,22 +33,22 @@ public class UserPersistenceManager {
   }
 
   @Cacheable(key = "#username", unless = "#result==null")
-  public UserEntity findByUsername(@NotNull String username) {
+  public UserEntity findByUsername(String username) {
     return repository.findByUsername(username);
   }
 
   @CachePut(key = "#userEntity.username")
-  public UserEntity save(@NotNull UserEntity userEntity) {
+  public UserEntity save(UserEntity userEntity) {
     return repository.save(userEntity);
   }
 
   @CacheEvict(key = "#userEntity.username")
-  public UserEntity update(@NotNull UserEntity userEntity) {
+  public UserEntity update(UserEntity userEntity) {
     return repository.save(userEntity);
   }
 
   @CacheEvict(key = "#username")
-  public void deleteByUsername(@NotNull String username) {
+  public void deleteByUsername(String username) {
     if (BooleanUtils.isFalse(repository.existsByUsername(username))) {
       throw new ErrorException(AuthenticationErrorType.USER_NOT_FOUND, username);
     }

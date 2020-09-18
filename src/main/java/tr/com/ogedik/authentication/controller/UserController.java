@@ -13,8 +13,6 @@ import tr.com.ogedik.commons.rest.response.AbstractResponse;
 import tr.com.ogedik.commons.util.MetaUtils;
 import tr.com.ogedik.commons.rest.AbstractController;
 
-import javax.validation.Valid;
-
 /**
  * @author orkun.gedik
  */
@@ -43,7 +41,7 @@ public class UserController extends AbstractController {
 
     @PostMapping
     public AbstractResponse createUser(
-            @Valid @RequestBody AuthenticationUser authenticationUser,
+            @RequestBody AuthenticationUser authenticationUser,
             @RequestHeader(value = Headers.AUTH_USER,
                     defaultValue = Headers.ANONYMOUS) String authenticatedUsername) {
         logger.info("The request has been received to create an user.");
@@ -53,7 +51,7 @@ public class UserController extends AbstractController {
     }
 
     @PutMapping
-    public AbstractResponse updateUser(@Valid @RequestBody AuthenticationUser authenticationUser,
+    public AbstractResponse updateUser(@RequestBody AuthenticationUser authenticationUser,
                                        @RequestHeader(Headers.AUTH_USER) String authenticatedUsername) {
         logger.info("The request has been received to update an user.");
         MetaUtils.fillMeta(authenticationUser, authenticatedUsername);

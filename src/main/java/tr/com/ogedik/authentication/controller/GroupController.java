@@ -13,8 +13,6 @@ import tr.com.ogedik.commons.rest.response.AbstractResponse;
 import tr.com.ogedik.commons.util.MetaUtils;
 import tr.com.ogedik.commons.rest.AbstractController;
 
-import javax.validation.Valid;
-
 /**
  * @author orkun.gedik
  */
@@ -40,7 +38,7 @@ public class GroupController extends AbstractController {
     }
 
     @PostMapping
-    public AbstractResponse createGroup(@Valid @RequestBody AuthenticationGroup authenticationGroup,
+    public AbstractResponse createGroup(@RequestBody AuthenticationGroup authenticationGroup,
                                         @RequestHeader(Headers.AUTH_USER) String authenticatedUsername) {
         logger.info("The request has been received to create a authenticationGroup.");
         MetaUtils.fillMeta(authenticationGroup, authenticatedUsername);
@@ -48,7 +46,7 @@ public class GroupController extends AbstractController {
     }
 
     @PutMapping
-    public AbstractResponse updateGroup(@Valid @RequestBody AuthenticationGroup authenticationGroup,
+    public AbstractResponse updateGroup(@RequestBody AuthenticationGroup authenticationGroup,
                                         @RequestHeader(Headers.AUTH_USER) String authenticatedUsername) {
         logger.info("The request has been received to update {} group.", authenticationGroup.getName());
         MetaUtils.fillMeta(authenticationGroup, authenticatedUsername);

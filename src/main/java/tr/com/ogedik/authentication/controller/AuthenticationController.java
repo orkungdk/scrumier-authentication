@@ -14,8 +14,6 @@ import tr.com.ogedik.commons.rest.AbstractController;
 import tr.com.ogedik.commons.rest.request.model.AuthenticationRequest;
 import tr.com.ogedik.commons.rest.response.AbstractResponse;
 
-import javax.validation.Valid;
-
 /**
  * @author orkun.gedik
  */
@@ -28,13 +26,13 @@ public class AuthenticationController extends AbstractController {
     private AuthenticationService authenticationService;
 
     @PostMapping(Services.Path.AUTHENTICATE)
-    public AbstractResponse authenticate(@Valid @RequestBody AuthenticationRequest authenticationRequest) {
+    public AbstractResponse authenticate(@RequestBody AuthenticationRequest authenticationRequest) {
         logger.info("The request has been received to create authentication token.");
         return AbstractResponse.build(authenticationService.authenticate(authenticationRequest));
     }
 
     @PostMapping(Services.Path.VALIDATE)
-    public AbstractResponse validate(@Valid @RequestBody String token) {
+    public AbstractResponse validate(@RequestBody String token) {
         logger.info("The request has been received to create authentication token.");
         return AbstractResponse.build(authenticationService.validateToken(token));
     }
