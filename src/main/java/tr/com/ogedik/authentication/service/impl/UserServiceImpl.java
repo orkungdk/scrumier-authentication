@@ -65,7 +65,8 @@ public class UserServiceImpl extends AbstractService implements UserService {
             return userMapper.convert(entity);
         } catch (IncorrectResultSizeDataAccessException e) {
             logger.error("User entity cannot be retrieved for username {}, error -> {}", username, e);
-            throw new ErrorException(AuthenticationErrorType.MULTIPLE_USER_FOUND, username + " has multiple user result");
+            throw new ErrorException(AuthenticationErrorType.MULTIPLE_USER_FOUND,
+                    String.format("\"%s\" username is not valid. Please contact with your admin", username));
         }
     }
 

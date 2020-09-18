@@ -2,8 +2,6 @@ package tr.com.ogedik.authentication.model;
 
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.Authentication;
 

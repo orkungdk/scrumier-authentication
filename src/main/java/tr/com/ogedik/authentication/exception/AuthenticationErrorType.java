@@ -10,9 +10,9 @@ import tr.com.ogedik.commons.expection.model.ErrorMessage;
 @Getter
 public enum AuthenticationErrorType implements ErrorType {
 
-    AUTH_FAIL("Authentication failed.", 401),
-    USER_DISABLED(AUTH_FAIL + "User has been disabled.", 401),
-    INVALID_CREDENTIALS(AUTH_FAIL + "Invalid credentials.", 401),
+    AUTH_FAIL("Authentication failed. ", 401),
+    USER_DISABLED(AUTH_FAIL.getTitle() + "User has been disabled.", 401),
+    INVALID_CREDENTIALS(AUTH_FAIL.getTitle() + "Invalid credentials.", 401),
     UNABLE_GET_TOKEN("Unable to get token.", 401),
     TOKEN_EXPIRED("Token has expired.", 401),
     UNAUTHORIZED("Unauthorized request.", 401),
