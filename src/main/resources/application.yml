@@ -1,0 +1,44 @@
+# Application configuration
+server:
+  port: 8091
+
+spring:
+  application:
+    name: authentication
+  # Database configuration
+  datasource:
+    password: ${DATABASE_PASSWORD:ogedik.112233}
+    url: jdbc:mysql://${DATABASE_HOST:localhost}:${DATABASE_PORT:3306}/scrumier?createDatabaseIfNotExist=true
+    username: ${DATABASE_USERNAME:root}
+  # Hibernate settings
+  jpa:
+    hibernate:
+      # Modify with "create" to drops tables and creates again on each service start-up in the local environment.
+      # ----- DO NOT PUSH THIS CHANGE !  -----
+      ddl-auto: update
+      use-new-id-generator-mappings: false
+    properties:
+      hibernate:
+        format_sql: true
+        generate_statistics: true
+    show-sql: true
+
+# Cache Properties
+cache:
+  configuration:
+    name: authenticationCache
+  instanceName: hazelcast-instance
+
+# Eureka client configuration
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${DISCOVERY_SERVER_HOST:localhost}:${DISCOVERY_SERVER_PORT:8761}/eureka
+
+# Logging properties
+logging:
+  level:
+    org:
+      hibernate:
+        stat: debug
+        type: trace
