@@ -17,14 +17,10 @@ import tr.com.ogedik.authentication.persistance.manager.UserPersistenceManager;
 import tr.com.ogedik.authentication.service.UserService;
 import tr.com.ogedik.authentication.util.AuthenticationUtil;
 import tr.com.ogedik.authentication.validation.user.UserValidationFacade;
-import tr.com.ogedik.commons.abstraction.AbstractService;
-import tr.com.ogedik.commons.constants.Services;
 import tr.com.ogedik.commons.expection.ErrorException;
 import tr.com.ogedik.commons.model.JiraUser;
-import tr.com.ogedik.commons.rest.request.client.HttpRestClient;
-import tr.com.ogedik.commons.rest.request.client.helper.RequestURLDetails;
-import tr.com.ogedik.commons.rest.response.RestResponse;
-import tr.com.ogedik.commons.util.MapUtils;
+import tr.com.ogedik.commons.rest.response.AbstractResponse;
+import tr.com.ogedik.scrumier.proxy.clients.IntegrationProxy;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,7 +31,7 @@ import java.util.Map;
  */
 @Service
 @Transactional
-public class UserServiceImpl extends AbstractService implements UserService {
+public class UserServiceImpl implements UserService {
 
     private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
@@ -45,6 +41,8 @@ public class UserServiceImpl extends AbstractService implements UserService {
     private UserValidationFacade validationFacade;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private IntegrationProxy integrationProxy;
 
     @Override
     public List<AuthenticationUser> getAllUsers() {
@@ -83,9 +81,8 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     private String getAvatarUrl(String username) {
-        RequestURLDetails requestURLDetails = new RequestURLDetails(getRequestUrl(Services.INTEGRATION), Services.Path.JIRA_USER, MapUtils.of("username", username));
-        RestResponse<JiraUser> jiraUserResponse = HttpRestClient.doGet(requestURLDetails, JiraUser.class);
-        Map<String, String> avatarUrls = jiraUserResponse.getBody().getAvatarUrls();
+        JiraUser jiraUser = integrationProxy.getJiraUser(username);
+        Map<String, String> avatarUrls = jiraUser.getAvatarUrls();
 
         return avatarUrls.get("48x48"); // the biggest logo size
     }
