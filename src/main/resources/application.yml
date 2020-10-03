@@ -31,6 +31,8 @@ cache:
 
 # Eureka client configuration
 eureka:
+  instance:
+    preferIpAddress: true
   client:
     service-url:
       defaultZone: http://${DISCOVERY_SERVER_HOST:localhost}:${DISCOVERY_SERVER_PORT:8761}/eureka
