@@ -71,8 +71,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public AuthenticationUser create(AuthenticationUser user) {
         validationFacade.validateCreate(user);
+
+        JiraUser jiraUser = integrationProxy.getJiraUser(user.getUsername());
+
         user.setEnrolmentDate(LocalDateTime.now());
-        user.setAvatarUrl(getAvatarUrl(user.getUsername()));
+        user.setDisplayName(jiraUser.getDisplayName());
+        user.setAvatarUrl(jiraUser.getAvatarUrls().get("48x48"));
 
         UserEntity toBeCreatedEntity = userMapper.convertCreate(user);
         UserEntity createdEntity = persistenceManager.save(toBeCreatedEntity);
@@ -80,12 +84,6 @@ public class UserServiceImpl implements UserService {
         return userMapper.convert(createdEntity);
     }
 
-    private String getAvatarUrl(String username) {
-        JiraUser jiraUser = integrationProxy.getJiraUser(username);
-        Map<String, String> avatarUrls = jiraUser.getAvatarUrls();
-
-        return avatarUrls.get("48x48"); // the biggest logo size
-    }
 
     @Override
     public AuthenticationUser update(AuthenticationUser user) {

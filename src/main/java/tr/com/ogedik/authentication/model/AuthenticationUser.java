@@ -27,6 +27,8 @@ public class AuthenticationUser extends AbstractBo {
   @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
   private String password;
 
+  private String displayName;
+
   @NotNull
   private String team;
 

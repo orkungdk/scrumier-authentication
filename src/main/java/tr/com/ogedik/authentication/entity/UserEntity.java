@@ -33,6 +33,9 @@ public class UserEntity extends ResourceEntity {
   @Column(name = AuthenticationConstants.COLS.USERNAME)
   private String username;
 
+  @Column(name = AuthenticationConstants.COLS.DISPLAY_NAME)
+  private String displayName;
+
   @Column(name = AuthenticationConstants.COLS.EMAIL)
   private String email;
 
