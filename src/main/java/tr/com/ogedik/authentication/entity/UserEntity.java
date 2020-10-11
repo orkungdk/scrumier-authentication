@@ -1,23 +1,16 @@
 package tr.com.ogedik.authentication.entity;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import org.apache.commons.lang.ObjectUtils;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.commons.lang.ObjectUtils;
 import tr.com.ogedik.authentication.constants.AuthenticationConstants;
 import tr.com.ogedik.commons.entity.ResourceEntity;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author orkun.gedik

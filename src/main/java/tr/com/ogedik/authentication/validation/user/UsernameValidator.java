@@ -1,7 +1,6 @@
 package tr.com.ogedik.authentication.validation.user;
 
 import org.springframework.stereotype.Component;
-
 import tr.com.ogedik.authentication.model.AuthenticationUser;
 import tr.com.ogedik.commons.validator.Validator;
 

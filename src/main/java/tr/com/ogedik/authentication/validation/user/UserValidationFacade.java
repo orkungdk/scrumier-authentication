@@ -2,7 +2,6 @@ package tr.com.ogedik.authentication.validation.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import tr.com.ogedik.authentication.model.AuthenticationUser;
 import tr.com.ogedik.commons.validator.MandatoryFieldValidator;
 import tr.com.ogedik.commons.validator.ValidationFacade;

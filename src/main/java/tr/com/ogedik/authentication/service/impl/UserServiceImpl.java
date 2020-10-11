@@ -19,12 +19,10 @@ import tr.com.ogedik.authentication.util.AuthenticationUtil;
 import tr.com.ogedik.authentication.validation.user.UserValidationFacade;
 import tr.com.ogedik.commons.expection.ErrorException;
 import tr.com.ogedik.commons.model.JiraUser;
-import tr.com.ogedik.commons.rest.response.AbstractResponse;
 import tr.com.ogedik.scrumier.proxy.clients.IntegrationProxy;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author orkun.gedik

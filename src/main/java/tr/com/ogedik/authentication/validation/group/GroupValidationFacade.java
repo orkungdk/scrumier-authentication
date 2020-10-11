@@ -2,7 +2,6 @@ package tr.com.ogedik.authentication.validation.group;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import tr.com.ogedik.authentication.model.AuthenticationGroup;
 import tr.com.ogedik.commons.validator.ValidationFacade;
 

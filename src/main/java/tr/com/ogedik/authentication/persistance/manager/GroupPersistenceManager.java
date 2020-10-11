@@ -1,12 +1,11 @@
 package tr.com.ogedik.authentication.persistance.manager;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import tr.com.ogedik.authentication.entity.GroupEntity;
 import tr.com.ogedik.authentication.persistance.repository.GroupRepository;
+
+import java.util.List;
 
 /**
  * @author orkun.gedik

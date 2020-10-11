@@ -2,7 +2,6 @@ package tr.com.ogedik.authentication.exception;
 
 import lombok.Getter;
 import tr.com.ogedik.commons.expection.constants.ErrorType;
-import tr.com.ogedik.commons.expection.model.ErrorMessage;
 
 /**
  * @author orkun.gedik

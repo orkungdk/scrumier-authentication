@@ -1,8 +1,8 @@
 package tr.com.ogedik.authentication.service;
 
-import java.util.List;
-
 import tr.com.ogedik.authentication.model.AuthenticationGroup;
+
+import java.util.List;
 
 /**
  * @author orkun.gedik

@@ -1,15 +1,14 @@
 package tr.com.ogedik.authentication.model;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import tr.com.ogedik.commons.annotation.NotNull;
 import tr.com.ogedik.commons.model.AbstractBo;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author orkun.gedik

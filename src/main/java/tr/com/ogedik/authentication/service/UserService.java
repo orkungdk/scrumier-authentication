@@ -1,9 +1,9 @@
 package tr.com.ogedik.authentication.service;
 
-import java.util.List;
-
 import org.springframework.security.core.userdetails.UserDetailsService;
 import tr.com.ogedik.authentication.model.AuthenticationUser;
+
+import java.util.List;
 
 /**
  * @author orkun.gedik

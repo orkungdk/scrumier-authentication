@@ -1,15 +1,13 @@
 package tr.com.ogedik.authentication.model;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.security.core.Authentication;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.Authentication;
+
+import java.util.List;
 
 /**
  * @author orkun.gedik

@@ -1,17 +1,16 @@
 package tr.com.ogedik.authentication.util;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import lombok.experimental.UtilityClass;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.security.core.GrantedAuthority;
-
-import lombok.experimental.UtilityClass;
 import tr.com.ogedik.authentication.constants.Permission;
 import tr.com.ogedik.authentication.model.AuthenticationGroup;
 import tr.com.ogedik.authentication.model.UserGrantedAuthority;
 import tr.com.ogedik.commons.util.ListUtils;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author orkun.gedik

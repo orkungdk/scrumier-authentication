@@ -1,10 +1,9 @@
 package tr.com.ogedik.authentication.model;
 
-import org.springframework.security.core.GrantedAuthority;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
 import tr.com.ogedik.authentication.constants.Permission;
 
 /**

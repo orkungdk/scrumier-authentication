@@ -9,9 +9,9 @@ import tr.com.ogedik.authentication.model.AuthenticationUser;
 import tr.com.ogedik.authentication.service.UserService;
 import tr.com.ogedik.commons.constants.Headers;
 import tr.com.ogedik.commons.constants.Services;
+import tr.com.ogedik.commons.rest.AbstractController;
 import tr.com.ogedik.commons.rest.response.AbstractResponse;
 import tr.com.ogedik.commons.util.MetaUtils;
-import tr.com.ogedik.commons.rest.AbstractController;
 
 /**
  * @author orkun.gedik
